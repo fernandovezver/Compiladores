@@ -1,33 +1,83 @@
 const terminales = ['class', 'program', '{', '}', '(', ')', 'if', 'else', 'while', 'iterate', 'void', 'isRed', 'isBlack', 'isHeart', 'isClubs', 'isDiamond', 'isSpades', 'isNotRed', 'isNotBlack', 'isNotHeart', 'isNotClubs', 'isNotDiamond', 'isNotSpades', 'isEmpty', 'isNotEmpty', '//<', '>', '//<=', '>=', '==', '!=', 'flip', 'getCard', 'putCard', 'VALUE'];
 
 var tokens;
+var errors;
+var errorNum;
 var matCurrPlaceCol = 0;
 var matCurrPlaceFil = 0;
 var flag = 0;
+
+function errorCreater(var text, var word, var line){
+    let error = {
+        errorText: text,
+        invalidWord: word,
+        errorLine: line
+    }
+    return error;
+}
 
 //Split del split para matriz dimensional
 function splitFunction() {
     //Separa el input en un arreglo que separa en lineas
     let lines = $('textarea').val().split(/[\n]+/);
+    let words;
     //El arreglo en lineas lo separa en palabras para crear una matriz
     for (var i = lines.length; i--; i >= 0) {
-        lines[i] = lines[i].split(/[" "]+/)
+        words[i] = lines[i].split(/[" "]+/)
     }
     //Retornamos el valor
-    return lines;
+    return words;
 }
-  
+
+function isValidToken(var token){
+    let regex = /\d/;
+    let regex2 = /^[\w]+$/;
+    if(!terminales.includes(token)){
+        if(!(regex.test(token))){
+            if(regex.test(token)){
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }else{
+        return true;
+    }
+}
+
+function lexico(){
+
+    for (var i = 0; i < tokens.length; i++) {
+        for (var j = 0; j < tokens[i].length; j++) {
+            if(!isValidToken(tokens[i][j])){
+                errors[errorNum++] = errorCreater("Invalid Token", tokens[i][j], i);
+            }else{
+            }
+        }
+    }
+}
+
 //La funcion que llamamos en el html, da inicio a todoo
 function mainFunction (){
     //Los reiniciamos o iniciamos
     matCurrPlaceFil = 0;
     matCurrPlaceCol = 0;
-    
+
+
     //Guardamos en tokens el resultado de splitFunction
     tokens = splitFunction();
     console.log(tokens);
+
+    //Lexico
+    lexico();
+    console.log(errorNum);
+    console.log(errors);
+
+    //Sintactico
     //Llamamos a program()
-    program();
+    //program();
 }
 /*
 Hasta ahora lo que hace exigir es:
@@ -68,7 +118,7 @@ function verificar(token) {
     return flag;
 }
 /*
-  Funciones de la Gramatica para hacer los metodos exigir y verificar, tambien mandar errores
+Funciones de la Gramatica para hacer los metodos exigir y verificar, tambien mandar errores
 */
 
 //<program> ::= "class" "program" "{" <functions> <main function> "}"
@@ -100,7 +150,7 @@ function program() {
     else {
         console.log("Error, missing statement (class)");
     }
-    
+
 }
 
 
@@ -121,13 +171,13 @@ function functions_alpha() {
 //<main function> ::= "program" "(" ")" "{" <body> "}"
 
 //<function> := "void" <name function> "("   ")" "{" <body> "}"
-/*function function() { 
+/*function function() {
     if ( exigir( "void" ) ) {
 	    name_function();
 	    if ( exigir( "(" ) ) {
 	        if ( exigir ( ")" ) ) {
 	            if ( exigir ( "{"  ) ) {
-	                body(); 
+	                body();
                     if ( !exigir( "}" ) ) {
 		            }
 	            } else {
@@ -144,7 +194,7 @@ function functions_alpha() {
 
 //<body alpha> ::= //<expression> //<body alpha> | LAMBDA
 
-//<expression> ::= //<call function> 
+//<expression> ::= //<call function>
   //<if expression> |
   //<while expression> |
   //<iterate expression>
@@ -155,11 +205,11 @@ function functions_alpha() {
 
 //<official function> ::= "flip" | "getCard" "(" //<number of deck> ")" | "putCard" "(" //<number of deck> ")"
 
-//<customer function> ::= is a string with only letters that was defined in a //<function> previously.	
+//<customer function> ::= is a string with only letters that was defined in a //<function> previously.
 
 //<number of deck> ::=  is a number between 0 to 52 ( inclusive )
 
-//<if expression> ::= "if" ( //<conditional> ) "{" //<body> "}"  //<elseif> 
+//<if expression> ::= "if" ( //<conditional> ) "{" //<body> "}"  //<elseif>
 
 //<elseif> ::= "else" "{" //<body> "}" | LAMBDA
 
