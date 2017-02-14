@@ -7,7 +7,7 @@ var matCurrPlaceCol = 0;
 var matCurrPlaceFil = 0;
 var flag = 0;
 
-function errorCreater(var text, var word, var line){
+function errorCreater(text, word, line){
     let error = {
         errorText: text,
         invalidWord: word,
@@ -29,7 +29,7 @@ function splitFunction() {
     return words;
 }
 
-function isValidToken(var token){
+function isValidToken(token){
     let regex = /\d/;
     let regex2 = /^[\w]+$/;
     if(!terminales.includes(token)){
