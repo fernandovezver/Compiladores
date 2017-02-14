@@ -1,0 +1,44 @@
+class program {
+
+program ( ) {
+ flip
+}
+}
+
+class program {
+
+program ( ) {
+          getCard ( 0 )
+ if ( isRed ) {
+            flip
+          }
+}
+}
+
+class program {
+
+program ( ) {
+ while ( isNotEmpty ( 0 ) ) {
+            flip
+            getCard ( 0 )
+          }
+}
+}
+
+class program {
+     void voltear ( ) {
+       flip
+     }
+
+     void recorrer ( ) {
+ while ( isNotEmpty ( 0 ) ) {
+            getCard ( 0 )
+            voltear
+            putCard ( 1 )
+          }
+     }
+
+     program ( ) {
+       recorrer
+     }
+}

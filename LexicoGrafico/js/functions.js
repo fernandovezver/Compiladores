@@ -1,4 +1,6 @@
-const terminales = ['class', 'program', '{', '}', '(', ')', 'if', 'else', 'while', 'iterate', 'void', 'isRed', 'isBlack', 'isHeart', 'isClubs', 'isDiamond', 'isSpades', 'isNotRed', 'isNotBlack', 'isNotHeart', 'isNotClubs', 'isNotDiamond', 'isNotSpades', 'isEmpty', 'isNotEmpty', '//<', '>', '//<=', '>=', '==', '!=', 'flip', 'getCard', 'putCard', 'VALUE'];
+
+
+const terminales = ['','class', 'program', '{', '}', '(', ')', 'if', 'else', 'while', 'iterate', 'void', 'isRed', 'isBlack', 'isHeart', 'isClubs', 'isDiamond', 'isSpades', 'isNotRed', 'isNotBlack', 'isNotHeart', 'isNotClubs', 'isNotDiamond', 'isNotSpades', 'isEmpty', 'isNotEmpty', '//<', '>', '//<=', '>=', '==', '!=', 'flip', 'getCard', 'putCard', 'VALUE'];
 
 var tokens;
 var errors;
@@ -32,15 +34,20 @@ function splitFunction() {
 function isValidToken(token){
     let regex = /\d/;
     let regex2 = /^[\w]+$/;
+    let number = /^\d+$/;
     if(!terminales.includes(token)){
-        if(!(regex.test(token))){
-            if(regex2.test(token)){
-                return true;
-            }else{
-                return false;
-            }
+        if(number.test(token)){
+            return true;
         }else{
-                return false;
+            if(!(regex.test(token))){
+                if(regex2.test(token)){
+                    return true;
+                }else{
+                    return false;
+                }
+            }else{
+                    return false;
+            }
         }
     }else{
         return true;
@@ -58,8 +65,19 @@ function lexico(){
     }
 }
 
+function showerrors(){
+  $('#errorarea').append("ERRORS FOUND "+errorNum+"&#10;");
+  for (var i = 0; i < errorNum; i++) {
+    $('#errorarea').append("Error in line "+errors[i].errorLine+"&#10;"+"Error: "+errors[i].invalidWord+"&#10;"+"NameError: "+errors[i].errorText+"&#10;&#10;");
+    //$('#errorarea').append(i+" - Error: "+errors[i].errorText+" in line "+errors[i].errorLine+": "+errors[i].invalidWord+"&#10;");
+    console.log(errors[i].invalidWord);
+    console.log(errors[i].errorLine);
+  }
+}
+
 //La funcion que llamamos en el html, da inicio a todoo
 function mainFunction (){
+    $("#errorarea").html('');
     //Los reiniciamos o iniciamos
     matCurrPlaceFil = 0;
     matCurrPlaceCol = 0;
@@ -68,12 +86,11 @@ function mainFunction (){
 
     //Guardamos en tokens el resultado de splitFunction
     tokens = splitFunction();
-    console.log(tokens);
-
     //Lexico
     lexico();
-    console.log(errorNum);
-    console.log(errors[1].errorText);
+
+    showerrors();
+
 
     //Sintactico
     //Llamamos a program()
