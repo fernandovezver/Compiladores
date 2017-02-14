@@ -40,7 +40,7 @@ function isValidToken(token){
                 return false;
             }
         }else{
-            return false;
+                return false;
         }
     }else{
         return true;
@@ -73,7 +73,7 @@ function mainFunction (){
     //Lexico
     lexico();
     console.log(errorNum);
-    console.log(errors);
+    console.log(errors[1].errorText);
 
     //Sintactico
     //Llamamos a program()
