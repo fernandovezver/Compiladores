@@ -20,7 +20,7 @@ function errorCreater(text, word, line){
 function splitFunction() {
     //Separa el input en un arreglo que separa en lineas
     let lines = $('textarea').val().split(/[\n]+/);
-    let words;
+    let words = [];
     //El arreglo en lineas lo separa en palabras para crear una matriz
     for (var i = lines.length; i--; i >= 0) {
         words[i] = lines[i].split(/[" "]+/)
@@ -34,7 +34,7 @@ function isValidToken(token){
     let regex2 = /^[\w]+$/;
     if(!terminales.includes(token)){
         if(!(regex.test(token))){
-            if(regex.test(token)){
+            if(regex2.test(token)){
                 return true;
             }else{
                 return false;
@@ -48,11 +48,10 @@ function isValidToken(token){
 }
 
 function lexico(){
-
     for (var i = 0; i < tokens.length; i++) {
         for (var j = 0; j < tokens[i].length; j++) {
             if(!isValidToken(tokens[i][j])){
-                errors[errorNum++] = errorCreater("Invalid Token", tokens[i][j], i);
+                errors[errorNum++] = errorCreater("Invalid Token", tokens[i][j], i+1);
             }else{
             }
         }
@@ -64,7 +63,8 @@ function mainFunction (){
     //Los reiniciamos o iniciamos
     matCurrPlaceFil = 0;
     matCurrPlaceCol = 0;
-
+    errorNum = 0;
+    errors = [];
 
     //Guardamos en tokens el resultado de splitFunction
     tokens = splitFunction();
