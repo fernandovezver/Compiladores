@@ -2,20 +2,20 @@ const terminales = ['','class', 'program', '{', '}', '(', ')', 'if', 'else', 'wh
 
 
 
-var tokens;
-var errors;
-var errorNum;
-var matCurrPlaceCol = 0;
-var matCurrPlaceFil = 0;
-var flag = 0;
+let tokens;
+let errors;
+let errorNum;
+let matCurrPlaceCol;
+let matCurrPlaceFil;
+let flag;
 
 function errorCreater(text, word, line){
-    let error = {
+    let newError = {
         errorText: text,
         invalidWord: word,
         errorLine: line
-    }
-    return error;
+    };
+    return newError;
 }
 
 //Split del split para matriz dimensional
@@ -24,7 +24,7 @@ function splitFunction() {
     let lines = $('textarea').val().split(/[\n]+/);
     let words = [];
     //El arreglo en lineas lo separa en palabras para crear una matriz
-    for (var i = lines.length; i--; i >= 0) {
+    for (let i = lines.length; i--; i >= 0) {
         words[i] = lines[i].split(/[" "]+/)
     }
     //Retornamos el valor
@@ -55,8 +55,8 @@ function isValidToken(token){
 }
 
 function lexico(){
-    for (var i = 0; i < tokens.length; i++) {
-        for (var j = 0; j < tokens[i].length; j++) {
+    for (let i = 0; i < tokens.length; i++) {
+        for (let j = 0; j < tokens[i].length; j++) {
             if(!isValidToken(tokens[i][j])){
                 errors[errorNum++] = errorCreater("Invalid Token", tokens[i][j], i+1);
             }else{
@@ -67,7 +67,7 @@ function lexico(){
 
 function showerrors(){
   $('#errorarea').append("ERRORS FOUND "+errorNum+"&#10;");
-  for (var i = 0; i < errorNum; i++) {
+  for (let i = 0; i < errorNum; i++) {
     $('#errorarea').append("Error in line "+errors[i].errorLine+"&#10;"+"Error: "+errors[i].invalidWord+"&#10;"+"NameError: "+errors[i].errorText+"&#10;&#10;");
     //$('#errorarea').append(i+" - Error: "+errors[i].errorText+" in line "+errors[i].errorLine+": "+errors[i].invalidWord+"&#10;");
     console.log(errors[i].invalidWord);
