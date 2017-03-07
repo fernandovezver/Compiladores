@@ -83,15 +83,18 @@ function mainFunction (){
     //Lexico
     lexico();
 
+    //Sintactico
+    //Llamamos a program()
+    program();
+    
     showerrors();
     
     errorNum = 0;
     errors = [];
 
 
-    //Sintactico
-    //Llamamos a program()
-    program();
+    
+    
 }
 /*
 Hasta ahora lo que hace exigir es:
@@ -138,6 +141,7 @@ Funciones de la Gramatica para hacer los metodos exigir y verificar, tambien man
 //<program> ::= "class" "program" "{" <functions> <main function> "}"
 
 function program() {
+    console.log("Mensaje");
     if (exigir("class")) {
         if (exigir("program")) {
             if (exigir("{")) {
