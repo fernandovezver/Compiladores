@@ -10,7 +10,7 @@ function errorCreater(text, word, line){
     errors[errorNum++] =  {
                             errorText: text,
                             invalidWord: word,
-                            errorLine: line
+                            errorLine: line + 1
                         };
 }
 
@@ -48,7 +48,7 @@ function lexico(){
     for (let i = 0; i < tokens.length; i++) {
         for (let j = 0; j < tokens[i].length; j++) {
             if(!isValidToken(tokens[i][j])){
-                errorCreater("Invalid Token", tokens[i][j], i+1);
+                errorCreater("Invalid Token", tokens[i][j], i);
             }else{
             }
         }
@@ -326,7 +326,7 @@ function official(){
 
 //<customer function> ::= is a string with only letters th9 at was defined in a //<function> previously.
 function customer(){
-	console.log("Custome Function")
+	console.log("Custome Function");
     //   
     if(tokens[matCurrPlaceFil].length > matCurrPlaceCol){
         matCurrPlaceCol++;
