@@ -1,7 +1,5 @@
 const terminales = ['','class', 'program', '{', '}', '(', ')', 'if', 'else', 'while', 'iterate', 'void', 'isRed', 'isBlack', 'isHeart', 'isClubs', 'isDiamond', 'isSpades', 'isNotRed', 'isNotBlack', 'isNotHeart', 'isNotClubs', 'isNotDiamond', 'isNotSpades', 'isEmpty', 'isNotEmpty', '//<', '>', '//<=', '>=', '==', '!=', 'flip', 'getCard', 'putCard', 'VALUE'];
 
-
-
 let tokens;
 let errors;
 let errorNum;
@@ -39,13 +37,11 @@ function isValidToken(token){
         }else{
             if(!(regex.test(token))){
                 return regex2.test(token);
-            }else{
-                    return false;
-            }
+            }else
+                return false;
         }
-    }else{
+    }else
         return true;
-    }
 }
 
 function lexico(){
@@ -73,8 +69,6 @@ function showerrors(){
 function mainFunction (){
     $("#errorarea").html('');
     //Los reiniciamos o iniciamos
-    matCurrPlaceFil = 0;
-    matCurrPlaceCol = 0;
     errorNum = 0;
     errors = [];
 
@@ -83,18 +77,18 @@ function mainFunction (){
     //Lexico
     lexico();
 
+	showerrors();
     //Sintactico
     //Llamamos a program()
-    program();
-    
-    showerrors();
-    
+	matCurrPlaceFil = 0;
+	matCurrPlaceCol = 0;
     errorNum = 0;
     errors = [];
 
+	program();
 
-    
-    
+	console.log(errors);
+	showerrors();
 }
 /*
 Hasta ahora lo que hace exigir es:
@@ -130,6 +124,7 @@ function exigir(token) {
     }
     return flag;
 }
+
 function verificar(token) {
     var flag = false;
     return flag;
@@ -141,30 +136,29 @@ Funciones de la Gramatica para hacer los metodos exigir y verificar, tambien man
 //<program> ::= "class" "program" "{" <functions> <main function> "}"
 
 function program() {
-    console.log("Mensaje");
     if (exigir("class")) {
-        if (exigir("program")) {
+
+        if (exigir("class")) {
             if (exigir("{")) {
+
                 functions();
                 main_function();
                 if (exigir("}")) {
+	                console.log("Mensaje");
                 }
                 else
                     errorCreater("Error, unexpected token found, was expected: }", matCurrPlaceCol, matCurrPlaceFil);
-
             }
             else
                 errorCreater("Error, unexpected token found, was expected: {", matCurrPlaceCol, matCurrPlaceFil);
-
         }
-        else
-            errorCreater("Error, unexpected token found, was expected: program", matCurrPlaceCol, matCurrPlaceFil);
-
+        else{
+            console.log("Hola");
+	        errorCreater("Error, unexpected token found, was expected: program", matCurrPlaceCol, matCurrPlaceFil);
+        }
     }
     else
         errorCreater("Error, unexpected token found, was expected: class", matCurrPlaceCol, matCurrPlaceFil);
-
-
 }
 
 
