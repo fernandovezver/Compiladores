@@ -83,17 +83,14 @@ function mainFunction (){
     //Lexico
     lexico();
 
-    //Sintactico
+     //Sintactico
     //Llamamos a program()
     program();
     
     showerrors();
     
     errorNum = 0;
-    errors = [];
-
-
-    
+    errors = [];  
     
 }
 /*
@@ -132,6 +129,9 @@ function exigir(token) {
 }
 function verificar(token) {
     var flag = false;
+    if(token == tokens[matCurrPlaceFil][matCurrPlaceCol]){
+    	flag = true;
+    }
     return flag;
 }
 /*
@@ -141,7 +141,6 @@ Funciones de la Gramatica para hacer los metodos exigir y verificar, tambien man
 //<program> ::= "class" "program" "{" <functions> <main function> "}"
 
 function program() {
-    console.log("Mensaje");
     if (exigir("class")) {
         if (exigir("program")) {
             if (exigir("{")) {
@@ -161,8 +160,9 @@ function program() {
             errorCreater("Error, unexpected token found, was expected: program", matCurrPlaceCol, matCurrPlaceFil);
 
     }
-    else
-        errorCreater("Error, unexpected token found, was expected: class", matCurrPlaceCol, matCurrPlaceFil);
+    else{
+        errors[errorNum++] = errorCreater("Error, unexpected token found, was expected: class", matCurrPlaceCol, matCurrPlaceFil);
+    }
 
 
 }
@@ -170,13 +170,18 @@ function program() {
 
 //<functions> ::= <function> <functions alpha> | LAMBDA
 function functions() {
-    funFunction();
-    functions_alpha();
+	console.log(verificar("void"));
+	console.log("Si entro a functions");
+	if (verificar("void")){
+    	funFunction();
+    	functions_alpha();
+    }
 }
 
 //<functions alpha>  ::= <function> <functions alpha> | LAMBDA
 function functions_alpha() {
     if (verificar("void")) {
+    	console.log("Si entro a function Alpha");
         funFunction();
         functions_alpha();
     }
@@ -185,6 +190,7 @@ function functions_alpha() {
 //<main function> ::= "program" "(" ")" "{" <body> "}"
 
 function main_function(){
+	console.log("Si entro a main function");
     if(exigir("program")){
         if(exigir("(")){
             if(exigir(")")){
@@ -207,6 +213,7 @@ function main_function(){
 
 //<function> := "void" <name function> "("   ")" "{" <body> "}"
 function funFunction() {
+	console.log("Si entro a funfunction");
     if ( exigir( "void" ) ) {
         nameOfFunction();
 	    if ( exigir( "(" ) ) {
@@ -245,12 +252,16 @@ function funFunction() {
  }
 */
 function body(){
-    expression();
-    bodyAlpha();
+	console.log("Si entro a body");
+    if( verificar("flip") || verificar("getCard") || verificar("putCard") || verificar("if") || verificar("while") || verificar("iterate")){
+    	expression();
+    	bodyAlpha();
+    }
 }
 
 //<body alpha> ::= //<expression> //<body alpha> | LAMBDA
 function bodyAlpha(){
+	console.log("Si entro a body alpha");
     if( verificar("flip") || verificar("getCard") || verificar("putCard") || verificar("if") || verificar("while") || verificar("iterate")){
         expression();
         bodyAlpha();
@@ -260,6 +271,7 @@ function bodyAlpha(){
 //<expression> ::= //<call function> //<if expression> |//<while expression> | //<iterate expression>
 
 function expression(){
+	console.log("Si entro a expression");
     callFunction();
     if(verificar("if"))
         funIf();
@@ -280,8 +292,12 @@ function callFunction(){
 //<name of function> ::= //<official function> | //<customer function>
 
 function nameOfFunction(){
+	console.log("Si entro a Name of Function");
     if(verificar('flip') || verificar('getCard') || verificar('customer')){
         official();        
+    }
+    else if (verificar('{') || verificar('}') || verificar('(') || verificar(')')){
+    	errorCreater("Error, missing statement, was expected the name of function", matCurrPlaceCol, matCurrPlaceFil);
     }
     else{
         customer();
@@ -322,6 +338,7 @@ function official(){
 
 //<customer function> ::= is a string with only letters th9 at was defined in a //<function> previously.
 function customer(){
+	console.log("Custome Function")
     //   
     if(tokens[matCurrPlaceFil].length > matCurrPlaceCol){
         matCurrPlaceCol++;
@@ -364,6 +381,7 @@ function numberOfDeck(){
 //<if expression> ::= "if" ( //<conditional> ) "{" //<body> "}"  //<elseif>
 
 function funIf(){
+	console.log("Si entro al if");
     if (exigir("if")){
         if (exigir("(")){ 
             conditional();
@@ -387,6 +405,7 @@ function funIf(){
 //<elseif> ::= "else" "{" //<body> "}" | LAMBDA
 
 function funElseif(){
+	console.log("Si entro al else");
     if(exigir("else")){
         if(exigir("{")){
             body();
@@ -402,6 +421,7 @@ function funElseif(){
 //<while expression> ::= "while" "(" //<conditional> ")" "{" //<body> "}"
 
 function funWhile(){
+	console.log("Si entro al while");
     if(exigir("while")){
         if(exigir("(")){
             conditional();
