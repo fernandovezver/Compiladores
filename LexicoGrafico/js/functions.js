@@ -127,7 +127,7 @@ function exigir(token) {
 }
 
 function verificar(token) {
-    var flag = false;
+    let flag = false;
     if(token == tokens[matCurrPlaceFil][matCurrPlaceCol]){
     	flag = true;
     }
@@ -248,7 +248,7 @@ function funFunction() {
 */
 function body(){
 	console.log("Si entro a body");
-    if( verificar("flip") || verificar("getCard") || verificar("putCard") || verificar("if") || verificar("while") || verificar("iterate") || verificarcostumber()){
+    if( verificar("flip") || verificar("getCard") || verificar("putCard") || verificar("if") || verificar("while") || verificar("iterate") || verificarcostumer()){
     	expression();
     	bodyAlpha();
     }
@@ -257,7 +257,7 @@ function body(){
 //<body alpha> ::= //<expression> //<body alpha> | LAMBDA
 function bodyAlpha(){
 	console.log("Si entro a body alpha");
-    if( verificar("flip") || verificar("getCard") || verificar("putCard") || verificar("if") || verificar("while") || verificar("iterate") || verificarcostumber()){
+    if( verificar("flip") || verificar("getCard") || verificar("putCard") || verificar("if") || verificar("while") || verificar("iterate") || verificarcostumer()){
         expression();
         bodyAlpha();
     }
@@ -289,13 +289,13 @@ function callFunction(){
 
 function nameOfFunction(){
 	console.log("Si entro a Name of Function");
-    if(verificar('flip') || verificar('getCard') || verificar('customer')){
+    if(verificar('flip') || verificar('getCard') || verificar('putCard')){
         official();        
     }
     else if (verificar('{') || verificar('}') || verificar('(') || verificar(')')){
     	errorCreater("Error, missing statement, was expected the name of function", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
     }
-    else{
+    else if (verificarcostumer()){
         customer();
     }
 }
@@ -332,8 +332,8 @@ function official(){
 }
 
 
-function verificarcostumber(){
-	return !newFunctions.includes(tokens[matCurrPlaceFil][matCurrPlaceCol]);
+function verificarcostumer(){
+	return newFunctions.includes(tokens[matCurrPlaceFil][matCurrPlaceCol]);
 }
 
 
