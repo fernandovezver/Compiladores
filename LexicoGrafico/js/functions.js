@@ -1,4 +1,4 @@
-const terminales = ['','class', 'program', '{', '}', '(', ')', 'if', 'else', 'while', 'iterate', 'void', 'isRed', 'isBlack', 'isHeart', 'isClubs', 'isDiamond', 'isSpades', 'isNotRed', 'isNotBlack', 'isNotHeart', 'isNotClubs', 'isNotDiamond', 'isNotSpades', 'isEmpty', 'isNotEmpty', '//<', '>', '//<=', '>=', '==', '!=', 'flip', 'getCard', 'putCard', 'VALUE'];
+const terminales = ['class', 'program', '{', '}', '(', ')', 'if', 'else', 'while', 'iterate', 'void', 'isRed', 'isBlack', 'isHeart', 'isClubs', 'isDiamond', 'isSpades', 'isNotRed', 'isNotBlack', 'isNotHeart', 'isNotClubs', 'isNotDiamond', 'isNotSpades', 'isEmpty', 'isNotEmpty', '//<', '>', '//<=', '>=', '==', '!=', 'flip', 'getCard', 'putCard', 'VALUE'];
 
 let tokens;
 let errors;
@@ -25,8 +25,10 @@ function splitFunction() {
     //El arreglo en lineas lo separa en palabras para crear una matriz
     for (let i = lines.length; i--; i >= 0) {
         words[i] = lines[i].split(/[" "]+/)
+         words[i] = words[i].filter(Boolean);
     }
     //Retornamos el valor
+
     return words;
 }
 
@@ -71,6 +73,7 @@ function showerrors(){
 //La funcion que llamamos en el html, da inicio a todoo
 function mainFunction (){
     $("#errorarea").html('');
+
     //Los reiniciamos o iniciamos
     matCurrPlaceFil = 0;
 	matCurrPlaceCol = 0;
@@ -80,6 +83,7 @@ function mainFunction (){
 
     //Guardamos en tokens el resultado de splitFunction
     tokens = splitFunction();
+      console.log(tokens);
     //Lexico
     lexico();
     //Sintactico
@@ -127,6 +131,21 @@ function exigir(token) {
 }
 
 function verificar(token) {
+	flag = false;
+	if(tokens[matCurrPlaceFil].length > matCurrPlaceCol){
+		if(token == tokens[matCurrPlaceFil][matCurrPlaceCol]){
+			flag = true;
+		}
+	}else{
+        //Aumentamos uno a la fila
+        matCurrPlaceFil++;
+        //Reiniciamos las columnas
+        matCurrPlaceCol = 0;
+        if(token == tokens[matCurrPlaceFil][matCurrPlaceCol]){
+            //Bandera true
+            flag = true;
+        }
+    }
     return token == tokens[matCurrPlaceFil][matCurrPlaceCol];
 }
 /*
@@ -481,7 +500,7 @@ function conditional() {
         console.log("Encontramos una card simple function");
         cardSimpleFunction();
     }else if(verificar("VALUE")) {
-        console.log("Encontramos una card compuesta function");
+        console.log("Encontramos una card composed function");
         cardComposedCondition();
     }
     else if(verificar("isEmpty") || verificar("isNotEmpty")){
@@ -523,6 +542,7 @@ function cardSimpleFunction(){
 //<card composed condition> ::= "VALUE" //<operator> //<number>
 
 function cardComposedCondition(){
+	console.log("Entra a la card composed condition");
     if(exigir("VALUE")){
         if(verificar("<") || verificar(">") || verificar("<=") || verificar(">=") || verificar("==") || verificar("!=")){
             console.log("Encontramos un operador");
@@ -536,14 +556,14 @@ function cardComposedCondition(){
 //<number> ::= is a natural number between 1 - 13+
 function number(){
     if(tokens[matCurrPlaceFil].length > matCurrPlaceCol){
-        matCurrPlaceCol++;
+        
     }else{
         matCurrPlaceFil++;
         matCurrPlaceCol = 0;
     }if(!isNaN(tokens[matCurrPlaceFil][matCurrPlaceCol])){
         if(tokens[matCurrPlaceFil][matCurrPlaceCol] % 1 == 0){
             if(tokens[matCurrPlaceFil][matCurrPlaceCol]>0 && tokens[matCurrPlaceFil][matCurrPlaceCol] < 14){
-                
+                matCurrPlaceCol++;
             }else
                 errorCreater("Error, number needs to be in range [1,13] ", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
         }else
