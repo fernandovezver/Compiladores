@@ -77,27 +77,11 @@ function mainFunction (){
     //Lexico
     lexico();
 
-<<<<<<< HEAD
-     //Sintactico
-=======
-	showerrors();
-    //Sintactico
->>>>>>> 53be7199ea7d8bfdd51209109f5b41b8e1335ac7
+
     //Llamamos a program()
 	matCurrPlaceFil = 0;
 	matCurrPlaceCol = 0;
     errorNum = 0;
-<<<<<<< HEAD
-    errors = [];  
-    
-=======
-    errors = [];
-
-	program();
-
-	console.log(errors);
-	showerrors();
->>>>>>> 53be7199ea7d8bfdd51209109f5b41b8e1335ac7
 }
 /*
 Hasta ahora lo que hace exigir es:
@@ -169,16 +153,6 @@ function program() {
 	        errorCreater("Error, unexpected token found, was expected: program", matCurrPlaceCol, matCurrPlaceFil);
         }
     }
-<<<<<<< HEAD
-    else{
-        errors[errorNum++] = errorCreater("Error, unexpected token found, was expected: class", matCurrPlaceCol, matCurrPlaceFil);
-    }
-
-
-=======
-    else
-        errorCreater("Error, unexpected token found, was expected: class", matCurrPlaceCol, matCurrPlaceFil);
->>>>>>> 53be7199ea7d8bfdd51209109f5b41b8e1335ac7
 }
 
 
