@@ -5,13 +5,16 @@ let errors;
 let errorNum;
 let matCurrPlaceCol;
 let matCurrPlaceFil;
+let newFunctions;
 
-function errorCreater(text, word, line){
+function errorCreater(text, word, line, pos){
     errors[errorNum++] =  {
-                            errorText: text,
-                            invalidWord: word,
-                            errorLine: line + 1
-                        };
+        errorText: text,
+        invalidWord: word,
+        errorLine: line + 1,
+        errorPos: pos + 1
+    };
+
 }
 
 //Split del split para matriz dimensional
@@ -58,7 +61,7 @@ function lexico(){
 function showerrors(){
   $('#errorarea').append("ERRORS FOUND "+errorNum+"&#10;");
   for (let i = 0; i < errorNum; i++) {
-    $('#errorarea').append("Error in line "+errors[i].errorLine+"&#10;"+"Error: "+errors[i].invalidWord+"&#10;"+"NameError: "+errors[i].errorText+"&#10;&#10;");
+    $('#errorarea').append("Error in line "+errors[i].errorLine+"&#10;"+"Error position: "+errors[i].errorPos+"&#10;"+"Error: "+errors[i].invalidWord+"&#10;"+"NameError: "+errors[i].errorText+"&#10;&#10;");
     //$('#errorarea').append(i+" - Error: "+errors[i].errorText+" in line "+errors[i].errorLine+": "+errors[i].invalidWord+"&#10;");
     console.log(errors[i].invalidWord);
     console.log(errors[i].errorLine);
@@ -69,19 +72,24 @@ function showerrors(){
 function mainFunction (){
     $("#errorarea").html('');
     //Los reiniciamos o iniciamos
+    matCurrPlaceFil = 0;
+	matCurrPlaceCol = 0;
     errorNum = 0;
     errors = [];
+    newFunctions = [];
 
     //Guardamos en tokens el resultado de splitFunction
     tokens = splitFunction();
     //Lexico
     lexico();
+    //Sintactico
+    program();
 
-
+    showerrors();
     //Llamamos a program()
-	matCurrPlaceFil = 0;
-	matCurrPlaceCol = 0;
+	
     errorNum = 0;
+    errors = [];
 }
 /*
 Hasta ahora lo que hace exigir es:
@@ -133,8 +141,7 @@ Funciones de la Gramatica para hacer los metodos exigir y verificar, tambien man
 
 function program() {
     if (exigir("class")) {
-
-        if (exigir("class")) {
+        if (exigir("program")) {
             if (exigir("{")) {
 
                 functions();
@@ -143,14 +150,14 @@ function program() {
 	                console.log("Mensaje");
                 }
                 else
-                    errorCreater("Error, unexpected token found, was expected: }", matCurrPlaceCol, matCurrPlaceFil);
+                    errorCreater("Error, unexpected token found, was expected: }", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
             }
             else
-                errorCreater("Error, unexpected token found, was expected: {", matCurrPlaceCol, matCurrPlaceFil);
+                errorCreater("Error, unexpected token found, was expected: {", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
         }
         else{
             console.log("Hola");
-	        errorCreater("Error, unexpected token found, was expected: program", matCurrPlaceCol, matCurrPlaceFil);
+	        errorCreater("Error, unexpected token found, was expected: program", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
         }
     }
 }
@@ -187,15 +194,15 @@ function main_function(){
                     if(exigir("}")){
 
                     }else
-                        errorCreater("Error, unexpected token found, was expected: }", matCurrPlaceCol, matCurrPlaceFil);
+                        errorCreater("Error, unexpected token found, was expected: }", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
                 }else
-                    errorCreater("Error, unexpected token found, was expected: {", matCurrPlaceCol, matCurrPlaceFil);
+                    errorCreater("Error, unexpected token found, was expected: {", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
             }else
-                errorCreater("Error, unexpected token found, was expected: )", matCurrPlaceCol, matCurrPlaceFil);
+                errorCreater("Error, unexpected token found, was expected: )", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
         }else
-            errorCreater("Error, unexpected token found, was expected: (", matCurrPlaceCol, matCurrPlaceFil);
+            errorCreater("Error, unexpected token found, was expected: (", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
     }else
-        errorCreater("Error, unexpected token found, was expected: program", matCurrPlaceCol, matCurrPlaceFil);
+        errorCreater("Error, unexpected token found, was expected: program", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
 }
 
 
@@ -210,15 +217,15 @@ function funFunction() {
 	                body();
                     if ( exigir( "}" ) ) {
 		            }else
-                        errorCreater("Error, unexpected token found, was expected: }", matCurrPlaceCol, matCurrPlaceFil);
+                        errorCreater("Error, unexpected token found, was expected: }", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
 	            } else
-	                errorCreater("Error, unexpected token found, was expected: {", matCurrPlaceCol, matCurrPlaceFil);
+	                errorCreater("Error, unexpected token found, was expected: {", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
             } else
-                errorCreater("Error, unexpected token found, was expected: )", matCurrPlaceCol, matCurrPlaceFil);
+                errorCreater("Error, unexpected token found, was expected: )", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
         } else
-            errorCreater("Error, unexpected token found, was expected: (", matCurrPlaceCol, matCurrPlaceFil);
+            errorCreater("Error, unexpected token found, was expected: (", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
     } else
-        errorCreater("Error, unexpected token found, was expected: void", matCurrPlaceCol, matCurrPlaceFil);
+        errorCreater("Error, unexpected token found, was expected: void", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
 }
 
 //<body> ::= //<expression> //<body alpha>
@@ -241,7 +248,7 @@ function funFunction() {
 */
 function body(){
 	console.log("Si entro a body");
-    if( verificar("flip") || verificar("getCard") || verificar("putCard") || verificar("if") || verificar("while") || verificar("iterate")){
+    if( verificar("flip") || verificar("getCard") || verificar("putCard") || verificar("if") || verificar("while") || verificar("iterate") || verificarcostumber()){
     	expression();
     	bodyAlpha();
     }
@@ -250,7 +257,7 @@ function body(){
 //<body alpha> ::= //<expression> //<body alpha> | LAMBDA
 function bodyAlpha(){
 	console.log("Si entro a body alpha");
-    if( verificar("flip") || verificar("getCard") || verificar("putCard") || verificar("if") || verificar("while") || verificar("iterate")){
+    if( verificar("flip") || verificar("getCard") || verificar("putCard") || verificar("if") || verificar("while") || verificar("iterate") || verificarcostumber()){
         expression();
         bodyAlpha();
     }
@@ -260,13 +267,14 @@ function bodyAlpha(){
 
 function expression(){
 	console.log("Si entro a expression");
-    callFunction();
     if(verificar("if"))
         funIf();
     else if(verificar("while"))
         funWhile();
     else if(verificar("iterate"))
         iterate();
+    else
+    	callFunction();
 
 }
 
@@ -285,7 +293,7 @@ function nameOfFunction(){
         official();        
     }
     else if (verificar('{') || verificar('}') || verificar('(') || verificar(')')){
-    	errorCreater("Error, missing statement, was expected the name of function", matCurrPlaceCol, matCurrPlaceFil);
+    	errorCreater("Error, missing statement, was expected the name of function", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
     }
     else{
         customer();
@@ -305,9 +313,9 @@ function official(){
             if(exigir(")")){
 
             }else
-                errorCreater("Error, unexpected token found, was expected: )", matCurrPlaceCol, matCurrPlaceFil);
+                errorCreater("Error, unexpected token found, was expected: )", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
         }else
-            errorCreater("Error, unexpected token found, was expected: (", matCurrPlaceCol, matCurrPlaceFil);
+            errorCreater("Error, unexpected token found, was expected: (", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
     }else if(verificar("putCard")){
         exigir("putCard");
         if(exigir("(")){
@@ -316,11 +324,16 @@ function official(){
             if(exigir(")")){
 
             }else
-                errorCreater("Error, unexpected token found, was expected: )", matCurrPlaceCol, matCurrPlaceFil);
+                errorCreater("Error, unexpected token found, was expected: )", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
         }else
-            errorCreater("Error, unexpected token found, was expected: (", matCurrPlaceCol, matCurrPlaceFil);
+            errorCreater("Error, unexpected token found, was expected: (", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
     }else
-        errorCreater("Error, unexpected token found, was expected: void - getCard - putCard", matCurrPlaceCol, matCurrPlaceFil);
+        errorCreater("Error, unexpected token found, was expected: void - getCard - putCard", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
+}
+
+
+function verificarcostumber(){
+	return !newFunctions.includes(tokens[matCurrPlaceFil][matCurrPlaceCol]);
 }
 
 
@@ -329,18 +342,24 @@ function customer(){
 	console.log("Custome Function");
     //   
     if(tokens[matCurrPlaceFil].length > matCurrPlaceCol){
-        matCurrPlaceCol++;
+
     }else{
         matCurrPlaceFil++;
         matCurrPlaceCol = 0;
         
     }
+    console.log("Ejelelee");
+    console.log(tokens[matCurrPlaceFil][matCurrPlaceCol]);
+    console.log(!terminales.includes(tokens[matCurrPlaceFil][matCurrPlaceCol]));
     if(!terminales.includes(tokens[matCurrPlaceFil][matCurrPlaceCol])){
         console.log(tokens[matCurrPlaceFil][matCurrPlaceCol]);
         matCurrPlaceCol++;
+        if (!newFunctions.includes(tokens[matCurrPlaceFil][matCurrPlaceCol])) {
+        	newFunctions.push(tokens[matCurrPlaceFil][matCurrPlaceCol]);
+        }
     }
     else
-        errorCreater("Error, function name is reserved", matCurrPlaceCol, matCurrPlaceFil);
+        errorCreater("Error, function name is reserved", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
 }
 
 
@@ -348,7 +367,6 @@ function customer(){
 
 function numberOfDeck(){
      if(tokens[matCurrPlaceFil].length > matCurrPlaceCol){
-        matCurrPlaceCol++;
     }else{
         matCurrPlaceFil++;
         matCurrPlaceCol = 0;
@@ -359,10 +377,10 @@ function numberOfDeck(){
             console.log(tokens[matCurrPlaceFil][matCurrPlaceCol]);
         }
         else
-            errorCreater("Error, Expected number between 0 and 52, found another number", matCurrPlaceCol, matCurrPlaceFil);
+            errorCreater("Error, Expected number between 0 and 52, found another number", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
     }
     else
-        errorCreater("Error, Expected number found string or something else", matCurrPlaceCol, matCurrPlaceFil);
+        errorCreater("Error, Expected number found string or something else", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
     matCurrPlaceCol++;
 }
 
@@ -379,15 +397,15 @@ function funIf(){
                     if (exigir("}")) {
                         funElseif();
                     }else
-                        errorCreater("Error, unexpected token found, was expected: }", matCurrPlaceCol, matCurrPlaceFil);
+                        errorCreater("Error, unexpected token found, was expected: }", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
                 }else
-                    errorCreater("Error, unexpected token found, was expected: {", matCurrPlaceCol, matCurrPlaceFil);
+                    errorCreater("Error, unexpected token found, was expected: {", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
             }else
-                errorCreater("Error, unexpected token found, was expected: )", matCurrPlaceCol, matCurrPlaceFil);
+                errorCreater("Error, unexpected token found, was expected: )", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
         }else
-            errorCreater("Error, unexpected token found, was expected: (", matCurrPlaceCol, matCurrPlaceFil);
+            errorCreater("Error, unexpected token found, was expected: (", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
     }else
-        errorCreater("Error, unexpected token found, was expected: if", matCurrPlaceCol, matCurrPlaceFil);
+        errorCreater("Error, unexpected token found, was expected: if", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
 }
 
 //<elseif> ::= "else" "{" //<body> "}" | LAMBDA
@@ -399,9 +417,9 @@ function funElseif(){
             body();
             if(exigir("}")){
             }else
-                errorCreater("Error, unexpected token found, was expected: }", matCurrPlaceCol, matCurrPlaceFil);
+                errorCreater("Error, unexpected token found, was expected: }", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
         }else
-            errorCreater("Error, unexpected token found, was expected: {", matCurrPlaceCol, matCurrPlaceFil);
+            errorCreater("Error, unexpected token found, was expected: {", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
     }
 }
 
@@ -419,15 +437,15 @@ function funWhile(){
                     if(exigir("}")){
                         
                     }else
-                        errorCreater("Error, unexpected token found, was expected: }", matCurrPlaceCol, matCurrPlaceFil);
+                        errorCreater("Error, unexpected token found, was expected: }", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
                 }else
-                    errorCreater("Error, unexpected token found, was expected: {", matCurrPlaceCol, matCurrPlaceFil);
+                    errorCreater("Error, unexpected token found, was expected: {", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
             }else
-                errorCreater("Error, unexpected token found, was expected: )", matCurrPlaceCol, matCurrPlaceFil);
+                errorCreater("Error, unexpected token found, was expected: )", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
         }else
-            errorCreater("Error, unexpected token found, was expected: (", matCurrPlaceCol, matCurrPlaceFil);
+            errorCreater("Error, unexpected token found, was expected: (", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
     }else
-        errorCreater("Error, unexpected token found, was expected: while", matCurrPlaceCol, matCurrPlaceFil);
+        errorCreater("Error, unexpected token found, was expected: while", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
 }
 
 //<iterate expression> ::= "iterate" "(" //<number> ")" "{" //<body> "}"
@@ -442,15 +460,15 @@ function iterate(){
                     if(exigir("}")){
                         
                     }else
-                        errorCreater("Error, unexpected token found, was expected: }", matCurrPlaceCol, matCurrPlaceFil);
+                        errorCreater("Error, unexpected token found, was expected: }", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
                 }else
-                    errorCreater("Error, unexpected token found, was expected: {", matCurrPlaceCol, matCurrPlaceFil);
+                    errorCreater("Error, unexpected token found, was expected: {", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
             }else
-                errorCreater("Error, unexpected token found, was expected: )", matCurrPlaceCol, matCurrPlaceFil);
+                errorCreater("Error, unexpected token found, was expected: )", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
         }else
-              errorCreater("Error, unexpected token found, was expected: (", matCurrPlaceCol, matCurrPlaceFil);
+              errorCreater("Error, unexpected token found, was expected: (", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
     }else
-        errorCreater("Error, unexpected token found, was expected: iterate", matCurrPlaceCol, matCurrPlaceFil);
+        errorCreater("Error, unexpected token found, was expected: iterate", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
 }
 
 //<conditional> ::= //<card simple condition> | //<card composed condition> | //<deck simple condition>
@@ -468,7 +486,7 @@ function conditional() {
         deckSimpleCondition();
     }
     else
-        errorCreater("Error, Expected a valid conditional, found something else", matCurrPlaceCol, matCurrPlaceFil);
+        errorCreater("Error, Expected a valid conditional, found something else", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
 }
 //<card simple condition> ::= "isRed" | "isBlack" | "isHeart" | "isClubs" | "isDiamond" | "isSpades" | "isNotRed" | "isNotBlack" | "isNotHeart" | "isNotClubs" | "isNotDiamond" | "isNotSpades"
 
@@ -508,7 +526,7 @@ function cardComposedCondition(){
             operador();
             number();
         }else
-            errorCreater("Error, Expected operator, found something else or it is missing", matCurrPlaceCol, matCurrPlaceFil);
+            errorCreater("Error, Expected operator, found something else or it is missing", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
     }
 }
 
@@ -524,11 +542,11 @@ function number(){
             if(tokens[matCurrPlaceFil][matCurrPlaceCol]>0 && tokens[matCurrPlaceFil][matCurrPlaceCol] < 14){
                 
             }else
-                errorCreater("Error, number needs to be in range [1,13] ", matCurrPlaceCol, matCurrPlaceFil);
+                errorCreater("Error, number needs to be in range [1,13] ", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
         }else
-            errorCreater("Error,number needs to be integer ", matCurrPlaceCol, matCurrPlaceFil);
+            errorCreater("Error,number needs to be integer ", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
     }else
-        errorCreater("Error, empty number ", matCurrPlaceCol, matCurrPlaceFil);
+        errorCreater("Error, empty number ", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
 }
 
 //<operator> ::= "//<" | ">" | "//<=" | ">=" | "==" | "!="
@@ -551,16 +569,29 @@ function operador(){
 
 //<deck simple condition> ::= isEmpty "(" //<number of deck> ")" | isNotEmpty "(" //<number of deck> ")"
 function deckSimpleCondition(){
-    if(verificar("isEmpty") || verificar("isNotEmpty")){
-        console.log("Encontramos un condicional simple de deck");
+    if(verificar("isEmpty")){
+    	exigir("isEmpty");
+        console.log("Encontramos un condicional simple de deck: isEmpty");
         if(exigir("(")){
             numberOfDeck();
             if(exigir(")")){
                 
             }else
-                errorCreater("Error, unexpected token found, was expected: )", matCurrPlaceCol, matCurrPlaceFil);
+                errorCreater("Error, unexpected token found, was expected: )", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
         }else
-            errorCreater("Error, unexpected token found, was expected: (", matCurrPlaceCol, matCurrPlaceFil);
-    }else
-        errorCreater("Expected a value conditional, found something else", matCurrPlaceCol, matCurrPlaceFil);
+            errorCreater("Error, unexpected token found, was expected: (", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
+    }else if (verificar("isNotEmpty")){
+    	exigir("isNotEmpty");
+    	console.log("Encontramos un condicional simple de deck: isNotEmpty");
+        if(exigir("(")){
+            numberOfDeck();
+            if(exigir(")")){
+            
+            }else
+                errorCreater("Error, unexpected token found, was expected: )", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
+        }else
+            errorCreater("Error, unexpected token found, was expected: (", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
+    }
+    else
+        errorCreater("Expected a value conditional, found something else", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
 }
