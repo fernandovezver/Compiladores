@@ -277,7 +277,10 @@ function callFunction(){
 
 function nameOfFunction(){
     if(verificar('flip') || verificar('getCard') || verificar('customer')){
-        
+        official();        
+    }
+    else{
+        customer();
     }
 }
 
