@@ -141,10 +141,6 @@ Funciones de la Gramatica para hacer los metodos exigir y verificar, tambien man
 //<program> ::= "class" "program" "{" <functions> <main function> "}"
 
 function program() {
-<<<<<<< HEAD
-=======
-    console.log(exigir("class"));
->>>>>>> acdceccf0865db9f1bbcb84a8af1aec3be3d43be
     if (exigir("class")) {
         if (exigir("program")) {
             if (exigir("{")) {
