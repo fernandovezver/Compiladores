@@ -126,11 +126,7 @@ function exigir(token) {
 }
 
 function verificar(token) {
-    var flag = false;
-    if(token == tokens[matCurrPlaceFil][matCurrPlaceCol]){
-    	flag = true;
-    }
-    return flag;
+    return token == tokens[matCurrPlaceFil][matCurrPlaceCol];
 }
 /*
 Funciones de la Gramatica para hacer los metodos exigir y verificar, tambien mandar errores
@@ -247,7 +243,10 @@ function funFunction() {
 */
 function body(){
 	console.log("Si entro a body");
+	console.log(tokens[matCurrPlaceFil][matCurrPlaceCol]);
+	console.log(verificar("getCard"));
     if( verificar("flip") || verificar("getCard") || verificar("putCard") || verificar("if") || verificar("while") || verificar("iterate") || verificarcostumber()){
+    	console.log("Entra al if de body");
     	expression();
     	bodyAlpha();
     }
@@ -256,7 +255,10 @@ function body(){
 //<body alpha> ::= //<expression> //<body alpha> | LAMBDA
 function bodyAlpha(){
 	console.log("Si entro a body alpha");
+		console.log(tokens[matCurrPlaceFil][matCurrPlaceCol]);
+
     if( verificar("flip") || verificar("getCard") || verificar("putCard") || verificar("if") || verificar("while") || verificar("iterate") || verificarcostumber()){
+        console.log("Entra al if de body alpha");
         expression();
         bodyAlpha();
     }
@@ -288,11 +290,11 @@ function callFunction(){
 
 function nameOfFunction(){
 	console.log("Si entro a Name of Function");
-    if(verificar('flip') || verificar('getCard') || verificar('customer')){
+    if(verificar('flip') || verificar('getCard') || verificar('putCard')){
         official();        
     }
     else if (verificar('{') || verificar('}') || verificar('(') || verificar(')')){
-    	errorCreater("Error, missing statement, was expected the name of function", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
+    	errorCreater("Error, missing statement calling function, was expected the name of function", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
     }
     else{
         customer();
@@ -332,7 +334,7 @@ function official(){
 
 
 function verificarcostumber(){
-	return !newFunctions.includes(tokens[matCurrPlaceFil][matCurrPlaceCol]);
+	return newFunctions.includes(tokens[matCurrPlaceFil][matCurrPlaceCol]);
 }
 
 
@@ -352,10 +354,11 @@ function customer(){
     console.log(!terminales.includes(tokens[matCurrPlaceFil][matCurrPlaceCol]));
     if(!terminales.includes(tokens[matCurrPlaceFil][matCurrPlaceCol])){
         console.log(tokens[matCurrPlaceFil][matCurrPlaceCol]);
-        matCurrPlaceCol++;
         if (!newFunctions.includes(tokens[matCurrPlaceFil][matCurrPlaceCol])) {
         	newFunctions.push(tokens[matCurrPlaceFil][matCurrPlaceCol]);
         }
+        matCurrPlaceCol++;
+
     }
     else
         errorCreater("Error, function name is reserved", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
