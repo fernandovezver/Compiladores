@@ -9,11 +9,11 @@ let matCurrPlaceCol;
 let matCurrPlaceFil;
 
 function errorCreater(text, word, line){
-    return {
-        errorText: text,
-        invalidWord: word,
-        errorLine: line
-    };
+    errors[errorNum++] =  {
+                            errorText: text,
+                            invalidWord: word,
+                            errorLine: line
+                        };
 }
 
 //Split del split para matriz dimensional
@@ -52,7 +52,7 @@ function lexico(){
     for (let i = 0; i < tokens.length; i++) {
         for (let j = 0; j < tokens[i].length; j++) {
             if(!isValidToken(tokens[i][j])){
-                errors[errorNum++] = errorCreater("Invalid Token", tokens[i][j], i+1);
+                errorCreater("Invalid Token", tokens[i][j], i+1);
             }else{
             }
         }
@@ -141,7 +141,7 @@ Funciones de la Gramatica para hacer los metodos exigir y verificar, tambien man
 //<program> ::= "class" "program" "{" <functions> <main function> "}"
 
 function program() {
-    console.log("Mensaje");
+    console.log(exigir("class"));
     if (exigir("class")) {
         if (exigir("program")) {
             if (exigir("{")) {
