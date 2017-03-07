@@ -272,8 +272,10 @@ function nameOfFunction(){
 //<official function> ::= "flip" | "getCard" "(" //<number of deck> ")" | "putCard" "(" //<number of deck> ")"
 function official(){
     if(verificar("flip")){
+        exigir("flip");
         console.log("Le hizo flip")
     }else if(verificar("getCard")){
+        exigir("getCard");
         if(exigir("(")){
             console.log("Pidiendo número de deck");
             //number_of_deck();
@@ -285,6 +287,7 @@ function official(){
             errorCreater("Error, unexpected token found, was expected: (", matCurrPlaceCol, matCurrPlaceFil);
         }
     }else if(verificar("putCard")){
+        exigir("putCard");
         if(exigir("(")){
             number_of_deck();
             console.log("Pidiendo número de deck");
@@ -452,7 +455,13 @@ function iterate(){
 function conditional(){
     if (verificar("isRed") || verificar("isBlack") || verificar("isHeart") || verificar("isClubs") || verificar("isDiamond") || verificar("isSpaces") || verificar("isNotRed") || verificar("isNotBlack") || verificar("isNotHear") || verificar("isNotClubs") || verificar("isNotDiamond") || verificar("isNotSpades")) {
         cardSimpleFunction();
-    }else{
+    }else if(verificar("VALUE")){
+        cardComposedCondition();
+    }
+    else if(verificar("isEmpty") || verificar("isNotEmpty")){
+        deckSimpleCondition();
+    }
+    else{
         errorCreater("Error, Expected a valid conditional, found something else", matCurrPlaceCol, matCurrPlaceFil);
     }
 }
@@ -460,39 +469,51 @@ function conditional(){
 
 function cardSimpleFunction(){
     if(verificar("isRed")){
+        exigir("isRed");
         console.log("Encontramos una card simple function");
     } 
     else if(verificar("isBlack")){
+        exigir("isBlack");
         console.log("Encontramos una card simple function");
     } 
     else if(verificar("isHeart")){
+        exigir("isHeart");
         console.log("Encontramos una card simple function");
     } 
     else if(verificar("isClubs")){
+        exigir("isClubs");
         console.log("Encontramos una card simple function");
     } 
     else if(verificar("isDiamond")){
+        exigir("isDiamond");
         console.log("Encontramos una card simple function");
     } 
     else if(verificar("isSpaces")){
+        exigir("isSpaces");
         console.log("Encontramos una card simple function");
     } 
     else if(verificar("isNotRed")){
+        exigir("isNotRed");
         console.log("Encontramos una card simple function");
     } 
     else if(verificar("isNotBlack")){
+        exigir("isNotBlack");
         console.log("Encontramos una card simple function");
     } 
     else if(verificar("isNotHear")){
+        exigir("isNotHear");
         console.log("Encontramos una card simple function");
     } 
     else if(verificar("isNotClubs")){
+        exigir("isNotClubs");
         console.log("Encontramos una card simple function");
     } 
     else if(verificar("isNotDiamond")){
+        exigir("isNotDiamond");
         console.log("Encontramos una card simple function");
     } 
-    else if(verificar("isNotSpades"){
+    else if(verificar("isNotSpades")){
+        exigir("isNotSpades");
         console.log("Encontramos una card simple function");
     }
 }
@@ -537,21 +558,27 @@ function number(){
 
 function operador(){
     if(verificar("<")){
+        exigir("<");
         console.log("Encontramos un operador");
     } 
     else if(verificar(">")){
+        exigir(">");
         console.log("Encontramos un operador");
     } 
     else if(verificar("<=")){
+        exigir("<=");
         console.log("Encontramos un operador");
     } 
     else if(verificar(">=")){
+        exigir(">=");
         console.log("Encontramos un operador");
     } 
     else if(verificar("==")){
+        exigir("==");
         console.log("Encontramos un operador");
     } 
     else if(verificar("!=")){
+        exigir("!=");
         console.log("Encontramos un operador");
     }
 }
@@ -559,7 +586,7 @@ function operador(){
 
 //<deck simple condition> ::= isEmpty "(" //<number of deck> ")" | isNotEmpty "(" //<number of deck> ")"
 function deckSimpleCondition(){
-    if(exigir("isEmpty") || exigir("isNotEmpty")){
+    if(verificar("isEmpty") || verificar("isNotEmpty")){
         console.log("Encontramos un condicional simple de deck");
         if(exigir("(")){
             numberOfDeck();
@@ -572,7 +599,7 @@ function deckSimpleCondition(){
             errorCreater("Error, unexpected token found, was expected: (", matCurrPlaceCol, matCurrPlaceFil);
         }
     }else{
-        errorCreater("Error, unexpected token found, was expected: isEmpty or isNotEmpty", matCurrPlaceCol, matCurrPlaceFil);
+        errorCreater("Expected a value conditional, found something else", matCurrPlaceCol, matCurrPlaceFil);
     }
 }
 
