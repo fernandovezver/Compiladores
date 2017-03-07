@@ -14,6 +14,7 @@ function errorCreater(text, word, line, pos){
         errorLine: line + 1,
         errorPos: pos + 1
     };
+
 }
 
 //Split del split para matriz dimensional
@@ -340,7 +341,7 @@ function verificarcostumber(){
 
 //<customer function> ::= is a string with only letters th9 at was defined in a //<function> previously.
 function customer(){
-	console.log("Custome Function")
+	console.log("Custome Function");
     //   
     if(tokens[matCurrPlaceFil].length > matCurrPlaceCol){
 
