@@ -1,11 +1,31 @@
 const terminales = ['class', 'program', '{', '}', '(', ')', 'if', 'else', 'while', 'iterate', 'void', 'isRed', 'isBlack', 'isHeart', 'isClubs', 'isDiamond', 'isSpades', 'isNotRed', 'isNotBlack', 'isNotHeart', 'isNotClubs', 'isNotDiamond', 'isNotSpades', 'isEmpty', 'isNotEmpty', '//<', '>', '//<=', '>=', '==', '!=', 'flip', 'getCard', 'putCard', 'VALUE'];
 
+const IF = 10;
+const WHILE = 20;
+const ITERATE = 30;
+const RETURN = 40;
+const INICIO_PROG = 50;
+const FIN = 60;
+const JMP = 70;
+const CALL = 80;
+const FLIP = 90;
+const GETCARD = 100;
+const PUTCARD = 110;
+const VALUE = 120;
+const CONDICIONAL = 250;
+
+
+
+
 let tokens;
 let errors;
 let errorNum;
 let matCurrPlaceCol;
 let matCurrPlaceFil;
 let newFunctions;
+let codIntermedio;
+let stack;
+let i;
 
 function errorCreater(text, word, line, pos){
     errors[errorNum++] =  {
@@ -87,6 +107,9 @@ function mainFunction (){
     //Lexico
     lexico();
     //Sintactico
+	i = 0;
+	codIntermedio = [];
+
     program();
 
     showerrors();
@@ -409,10 +432,14 @@ function numberOfDeck(){
 function funIf(){
 	console.log("Si entro al if");
     if (exigir("if")){
-        if (exigir("(")){ 
+    	codIntermedio[i++] = IF;
+        if (exigir("(")){
+        	codIntermedio[i++] = CONDICIONAL;
             conditional();
             if (exigir(")")){
                 if (exigir("{")) {
+                	codIntermedio[i++] = 20;
+                	stack.push(i++);
                     body();
                     if (exigir("}")) {
                         funElseif();
@@ -432,15 +459,22 @@ function funIf(){
 
 function funElseif(){
 	console.log("Si entro al else");
-    if(exigir("else")){
+	if(verificar("else")){
+        exigir("else");
         if(exigir("{")){
+        	codIntermedio[stack.pop()] = i + 2;
+        	codIntermedio[i++] = JMP;
+        	stack.push(i++);
             body();
             if(exigir("}")){
+            	codIntermedio[stack.pop()] = i;
             }else
                 errorCreater("Error, unexpected token found, was expected: }", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
         }else
             errorCreater("Error, unexpected token found, was expected: {", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
-    }
+    }else{
+		codIntermedio[i++] = stack.pop();
+	}
 }
 
 
@@ -449,13 +483,21 @@ function funElseif(){
 function funWhile(){
 	console.log("Si entro al while");
     if(exigir("while")){
+    	stack.push(i);
+    	codIntermedio[i++] = WHILE;
         if(exigir("(")){
             conditional();
+            codIntermedio[i++] = CONDICIONALES;
             if(exigir(")")){
                 if(exigir("{")){
+                	codIntermedio[i++] = JMP;
+                	strack.push(i++);
                     body();
+                    codIntermedio[i++] = JMP;
+                    codIntermedio[stack.pop()] = i+2;
+                    codIntermedio[i++] = stack.pop();
                     if(exigir("}")){
-                        
+
                     }else
                         errorCreater("Error, unexpected token found, was expected: }", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
                 }else
