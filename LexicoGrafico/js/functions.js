@@ -1,4 +1,4 @@
-const terminales = ['class', 'program', '{', '}', '(', ')', 'if', 'else', 'while', 'iterate', 'void', 'isRed', 'isBlack', 'isHeart', 'isClubs', 'isDiamond', 'isSpades', 'isNotRed', 'isNotBlack', 'isNotHeart', 'isNotClubs', 'isNotDiamond', 'isNotSpades', 'isEmpty', 'isNotEmpty', '//<', '>', '//<=', '>=', '==', '!=', 'flip', 'getCard', 'putCard', 'VALUE'];
+const terminales = ['class', 'program', '{', '}', '(', ')', 'if', 'else', 'while', 'iterate', 'void', 'isRed', 'isBlack', 'isHeart', 'isClubs', 'isDiamond', 'isSpades', 'isNotRed', 'isNotBlack', 'isNotHeart', 'isNotClubs', 'isNotDiamond', 'isNotSpades', 'isEmpty', 'isNotEmpty', '<', '>', '<=', '>=', '==', '!=', 'flip', 'getCard', 'putCard', 'VALUE'];
 
 const IF = 10;
 const WHILE = 20;
@@ -12,8 +12,52 @@ const FLIP = 90;
 const GETCARD = 100;
 const PUTCARD = 110;
 const VALUE = 120;
-const CONDICIONAL = 250;
 
+const ConstClass = 501;
+const ConstProgram = 502;
+//{
+const ConstLlave1 = 503;
+//}
+const ConstLlave2 = 504;
+//(
+const ConstAbrir = 505;
+// )
+const ConstCerrar = 506;
+const ConstIf = 507;
+const ConstElse = 508;
+const ConstWhile = 509;
+const ConstIterate = 510;
+const ConstVoid = 511;
+const ConstIsRed = 512;
+const ConstIsBlack = 513;
+const ConstIsHeart = 514;
+const ConstIsClubs = 515;
+const ConstIsDiamond = 516;
+const ConstIsSpades = 517;
+const ConstIsNotRed = 518;
+const ConstIsNotBlack = 519;
+const ConstIsNotHeart = 520;
+const ConstIsNotClubs = 521;
+const ConstIsNotDiamond = 522;
+const ConstIsNotSpades = 523;
+const ConstIsEmpty = 524;
+const ConstIsNotEmpty = 525;
+//<
+const ConstMenorque = 526;
+//>
+const ConstMayorque = 527;
+//<=
+const ConstMenorigual = 528;
+//>=
+const ConstMayorigual = 529;
+//==
+const ConstIgualigual = 530;
+//!=
+const ConstDiferente = 531;
+const ConstFlip = 532;
+const ConstGetCard = 533;
+const ConstPutCard = 534;
+const ConstValue = 535;
 
 
 
@@ -114,7 +158,7 @@ function mainFunction (){
 
     showerrors();
     //Llamamos a program()
-	
+
     errorNum = 0;
     errors = [];
 }
@@ -278,7 +322,7 @@ function funFunction() {
          if getCard {
             Si si hubo una de las palabras reservadas quiere decir que teniamos otra expression y por lo tanto teniamos que iterar y volvemos a entrar a body alpha
              if putCard{
-                 
+
              }
          }
      }
@@ -331,7 +375,7 @@ function callFunction(){
 function nameOfFunction(){
 	console.log("Si entro a Name of Function");
     if(verificar('flip') || verificar('getCard') || verificar('putCard')){
-        official();        
+        official();
     }
     else if (verificar('{') || verificar('}') || verificar('(') || verificar(')')){
     	errorCreater("Error, missing statement calling function, was expected the name of function", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
@@ -382,13 +426,13 @@ function verificarcostumber(){
 //<customer function> ::= is a string with only letters th9 at was defined in a //<function> previously.
 function customer(){
 	console.log("Custome Function");
-    //   
+    //
     if(tokens[matCurrPlaceFil].length > matCurrPlaceCol){
 
     }else{
         matCurrPlaceFil++;
         matCurrPlaceCol = 0;
-        
+
     }
     console.log("Ejelelee");
     console.log(tokens[matCurrPlaceFil][matCurrPlaceCol]);
@@ -413,7 +457,7 @@ function numberOfDeck(){
     }else{
         matCurrPlaceFil++;
         matCurrPlaceCol = 0;
-        
+
     }
     if(!isNaN(tokens[matCurrPlaceFil][matCurrPlaceCol])){
         if(tokens[matCurrPlaceFil][matCurrPlaceCol] >= 0 && tokens[matCurrPlaceFil][matCurrPlaceCol] < 53){
@@ -520,7 +564,7 @@ function iterate(){
                 if(exigir("{")){
                     body();
                     if(exigir("}")){
-                        
+
                     }else
                         errorCreater("Error, unexpected token found, was expected: }", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
                 }else
@@ -596,7 +640,7 @@ function cardComposedCondition(){
 //<number> ::= is a natural number between 1 - 13+
 function number(){
     if(tokens[matCurrPlaceFil].length > matCurrPlaceCol){
-        
+
     }else{
         matCurrPlaceFil++;
         matCurrPlaceCol = 0;
@@ -638,7 +682,7 @@ function deckSimpleCondition(){
         if(exigir("(")){
             numberOfDeck();
             if(exigir(")")){
-                
+
             }else
                 errorCreater("Error, unexpected token found, was expected: )", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
         }else
@@ -649,7 +693,7 @@ function deckSimpleCondition(){
         if(exigir("(")){
             numberOfDeck();
             if(exigir(")")){
-            
+
             }else
                 errorCreater("Error, unexpected token found, was expected: )", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
         }else
