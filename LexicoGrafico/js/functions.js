@@ -1,5 +1,6 @@
 const terminales = ['class', 'program', '{', '}', '(', ')', 'if', 'else', 'while', 'iterate', 'void', 'isRed', 'isBlack', 'isHeart', 'isClubs', 'isDiamond', 'isSpades', 'isNotRed', 'isNotBlack', 'isNotHeart', 'isNotClubs', 'isNotDiamond', 'isNotSpades', 'isEmpty', 'isNotEmpty', '<', '>', '<=', '>=', '==', '!=', 'flip', 'getCard', 'putCard', 'VALUE'];
 
+
 const IF = 10;
 const WHILE = 20;
 const ITERATE = 30;
@@ -13,18 +14,8 @@ const GETCARD = 100;
 const PUTCARD = 110;
 const CONSVALUE = 120;
 
-const ConstClass = 501;
-const ConstProgram = 502;
-//{
-const ConstLlave1 = 503;
-//}
-const ConstLlave2 = 504;
-//(
-const ConstAbrir = 505;
-// )
-const ConstCerrar = 506;
-const ConstElse = 508;
-const ConstVoid = 511;
+const CONDICIONAL = 255;
+
 const ConstIsRed = 512;
 const ConstIsBlack = 513;
 const ConstIsHeart = 514;
@@ -60,7 +51,7 @@ let matCurrPlaceCol;
 let matCurrPlaceFil;
 let newFunctions;
 let codIntermedio;
-let stack;
+let stack = [];
 let i;
 
 function errorCreater(text, word, line, pos){
@@ -153,6 +144,8 @@ function mainFunction (){
 
     errorNum = 0;
     errors = [];
+    console.log(codIntermedio);
+
 }
 /*
 Hasta ahora lo que hace exigir es:
@@ -475,6 +468,7 @@ function funIf(){
             conditional();
             if (exigir(")")){
                 if (exigir("{")) {
+                    //Esta linea que paso?
                 	codIntermedio[i++] = 20;
                 	stack.push(i++);
                     body();
@@ -524,11 +518,11 @@ function funWhile(){
     	codIntermedio[i++] = WHILE;
         if(exigir("(")){
             conditional();
-            codIntermedio[i++] = CONDICIONALES;
+            codIntermedio[i++] = CONDICIONAL;
             if(exigir(")")){
                 if(exigir("{")){
                 	codIntermedio[i++] = JMP;
-                	strack.push(i++);
+                	stack.push(i++);
                     body();
                     codIntermedio[i++] = JMP;
                     codIntermedio[stack.pop()] = i+2;
