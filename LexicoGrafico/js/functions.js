@@ -11,7 +11,7 @@ const CALL = 80;
 const FLIP = 90;
 const GETCARD = 100;
 const PUTCARD = 110;
-const VALUE = 120;
+const CONSVALUE = 120;
 
 const ConstClass = 501;
 const ConstProgram = 502;
@@ -23,10 +23,7 @@ const ConstLlave2 = 504;
 const ConstAbrir = 505;
 // )
 const ConstCerrar = 506;
-const ConstIf = 507;
 const ConstElse = 508;
-const ConstWhile = 509;
-const ConstIterate = 510;
 const ConstVoid = 511;
 const ConstIsRed = 512;
 const ConstIsBlack = 513;
@@ -54,11 +51,6 @@ const ConstMayorigual = 529;
 const ConstIgualigual = 530;
 //!=
 const ConstDiferente = 531;
-const ConstFlip = 532;
-const ConstGetCard = 533;
-const ConstPutCard = 534;
-const ConstValue = 535;
-
 
 
 let tokens;
@@ -225,7 +217,6 @@ function program() {
     if (exigir("class")) {
         if (exigir("program")) {
             if (exigir("{")) {
-
                 functions();
                 main_function();
                 if (exigir("}")) {
@@ -388,9 +379,11 @@ function nameOfFunction(){
 //<official function> ::= "flip" | "getCard" "(" //<number of deck> ")" | "putCard" "(" //<number of deck> ")"
 function official(){
     if(verificar("flip")){
+    	codIntermedio[i++] = FLIP;
         exigir("flip");
         console.log("Le hizo flip")
     }else if(verificar("getCard")){
+    	codIntermedio[i++] = GETCARD;
         exigir("getCard");
         if(exigir("(")){
             console.log("Pidiendo número de deck");
@@ -403,6 +396,7 @@ function official(){
             errorCreater("Error, unexpected token found, was expected: (", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
     }else if(verificar("putCard")){
         exigir("putCard");
+        codIntermedio[i++] = PUTCARD;
         if(exigir("(")){
             numberOfDeck();
             console.log("Pidiendo número de deck");
@@ -457,7 +451,6 @@ function numberOfDeck(){
     }else{
         matCurrPlaceFil++;
         matCurrPlaceCol = 0;
-
     }
     if(!isNaN(tokens[matCurrPlaceFil][matCurrPlaceCol])){
         if(tokens[matCurrPlaceFil][matCurrPlaceCol] >= 0 && tokens[matCurrPlaceFil][matCurrPlaceCol] < 53){
@@ -597,30 +590,54 @@ function conditional() {
 //<card simple condition> ::= "isRed" | "isBlack" | "isHeart" | "isClubs" | "isDiamond" | "isSpades" | "isNotRed" | "isNotBlack" | "isNotHeart" | "isNotClubs" | "isNotDiamond" | "isNotSpades"
 
 function cardSimpleFunction(){
-    if(verificar("isRed"))
-        exigir("isRed");
-    else if(verificar("isBlack"))
-        exigir("isBlack");
-    else if(verificar("isHeart"))
-        exigir("isHeart");
-    else if(verificar("isClubs"))
-        exigir("isClubs");
-    else if(verificar("isDiamond"))
-        exigir("isDiamond");
-    else if(verificar("isSpaces"))
-        exigir("isSpaces");
-    else if(verificar("isNotRed"))
-        exigir("isNotRed");
-    else if(verificar("isNotBlack"))
-        exigir("isNotBlack");
-    else if(verificar("isNotHear"))
-        exigir("isNotHear");
-    else if(verificar("isNotClubs"))
-        exigir("isNotClubs");
-    else if(verificar("isNotDiamond"))
-        exigir("isNotDiamond");
-    else if(verificar("isNotSpades"))
-        exigir("isNotSpades");
+    if(verificar("isRed")){
+    	codIntermedio[i++] = ConstIsRed;
+	    exigir("isRed");
+    }
+    else if(verificar("isBlack")) {
+    	codIntermedio[i++] = ConstIsBlack;
+	    exigir("isBlack");
+    }
+    else if(verificar("isHeart")){
+    	codIntermedio[i++] = ConstIsHeart;
+	    exigir("isHeart");
+    }
+    else if(verificar("isClubs")){
+    	codIntermedio[i++] = ConstIsClubs;
+	    exigir("isClubs");
+    }
+    else if(verificar("isDiamond")){
+    	codIntermedio[i++] = ConstIsDiamond;
+	    exigir("isDiamond");
+    }
+    else if(verificar("isSpades")){
+    	codIntermedio[i++] = ConstIsSpades;
+	    exigir("isSpades");
+    }
+    else if(verificar("isNotRed")){
+    	codIntermedio[i++] = ConstIsNotRed;
+	    exigir("isNotRed");
+    }
+    else if(verificar("isNotBlack")){
+    	codIntermedio[i++] = ConstIsNotBlack;
+	    exigir("isNotBlack");
+    }
+    else if(verificar("isNotHear")){
+    	codIntermedio[i++] = ConstIsNotHeart;
+	    exigir("isNotHear");
+    }
+    else if(verificar("isNotClubs")){
+    	codIntermedio[i++] = ConstIsNotClubs;
+	    exigir("isNotClubs");
+    }
+    else if(verificar("isNotDiamond")){
+    	codIntermedio[i++] = ConstIsNotDiamond;
+	    exigir("isNotDiamond");
+    }
+    else if(verificar("isNotSpades")){
+    	codIntermedio[i++] = ConstIsNotSpades;
+	    exigir("isNotSpades");
+    }
 }
 
 //<card composed condition> ::= "VALUE" //<operator> //<number>
@@ -628,6 +645,7 @@ function cardSimpleFunction(){
 function cardComposedCondition(){
 	console.log("Entra a la card composed condition");
     if(exigir("VALUE")){
+	    codIntermedio[i++] = CONSVALUE;
         if(verificar("<") || verificar(">") || verificar("<=") || verificar(">=") || verificar("==") || verificar("!=")){
             console.log("Encontramos un operador");
             operador();
@@ -647,6 +665,7 @@ function number(){
     }if(!isNaN(tokens[matCurrPlaceFil][matCurrPlaceCol])){
         if(tokens[matCurrPlaceFil][matCurrPlaceCol] % 1 == 0){
             if(tokens[matCurrPlaceFil][matCurrPlaceCol]>0 && tokens[matCurrPlaceFil][matCurrPlaceCol] < 14){
+            	codIntermedio[i++] = tokens[matCurrPlaceFil][matCurrPlaceCol];
                 matCurrPlaceCol++;
             }else
                 errorCreater("Error, number needs to be in range [1,13] ", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
@@ -659,18 +678,30 @@ function number(){
 //<operator> ::= "//<" | ">" | "//<=" | ">=" | "==" | "!="
 
 function operador(){
-    if(verificar("<"))
-        exigir("<");
-    else if(verificar(">"))
-        exigir(">");
-    else if(verificar("<="))
-        exigir("<=");
-    else if(verificar(">="))
-        exigir(">=");
-    else if(verificar("=="))
-        exigir("==");
-    else if(verificar("!="))
-        exigir("!=");
+    if(verificar("<")){
+    	codIntermedio[i++] = ConstMenorqueque;
+	    exigir("<");
+    }
+    else if(verificar(">")){
+    	codIntermedio[i++] = ConstMayorque;
+	    exigir(">");
+    }
+    else if(verificar("<=")){
+    	codIntermedio[i++] = ConstMenorigual;
+	    exigir("<=");
+    }
+    else if(verificar(">=")){
+    	codIntermedio[i++] = ConstMayorigual;
+	    exigir(">=");
+    }
+    else if(verificar("==")){
+    	codIntermedio[i++] = ConstIgualigual;
+	    exigir("==");
+    }
+    else if(verificar("!=")){
+    	codIntermedio[i++] = ConstDiferente;
+	    exigir("!=");
+    }
 }
 
 
@@ -678,6 +709,7 @@ function operador(){
 function deckSimpleCondition(){
     if(verificar("isEmpty")){
     	exigir("isEmpty");
+    	codIntermedio[i++] = ConstIsEmpty;
         console.log("Encontramos un condicional simple de deck: isEmpty");
         if(exigir("(")){
             numberOfDeck();
@@ -688,8 +720,9 @@ function deckSimpleCondition(){
         }else
             errorCreater("Error, unexpected token found, was expected: (", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
     }else if (verificar("isNotEmpty")){
-    	exigir("isNotEmpty");
-    	console.log("Encontramos un condicional simple de deck: isNotEmpty");
+	    exigir("isNotEmpty");
+	    codIntermedio[i++] = ConstIsNotEmpty;
+	    console.log("Encontramos un condicional simple de deck: isNotEmpty");
         if(exigir("(")){
             numberOfDeck();
             if(exigir(")")){
