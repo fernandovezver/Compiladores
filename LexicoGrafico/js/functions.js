@@ -50,6 +50,7 @@ let errorNum;
 let matCurrPlaceCol;
 let matCurrPlaceFil;
 let newFunctions;
+let newValues;
 let codIntermedio;
 let stack = [];
 let pos;
@@ -127,6 +128,7 @@ function mainFunction (){
     errorNum = 0;
     errors = [];
     newFunctions = [];
+    newValues = [];
 
     //Guardamos en tokens el resultado de splitFunction
     tokens = splitFunction();
@@ -380,7 +382,6 @@ function official(){
             console.log("Pidiendo número de deck");
             numberOfDeck();
             if(exigir(")")){
-
             }else
                 errorCreater("Error, unexpected token found, was expected: )", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
         }else
@@ -403,7 +404,7 @@ function official(){
 
 
 
-function verificarcostumber(){
+function verificarcostumer(){
 	return newFunctions.includes(tokens[matCurrPlaceFil][matCurrPlaceCol]);
 }
 
@@ -413,19 +414,17 @@ function customer(){
 	console.log("Custome Function");
     //
     if(tokens[matCurrPlaceFil].length > matCurrPlaceCol){
-
     }else{
         matCurrPlaceFil++;
         matCurrPlaceCol = 0;
-
     }
-    console.log("Ejelelee");
     console.log(tokens[matCurrPlaceFil][matCurrPlaceCol]);
     console.log(!terminales.includes(tokens[matCurrPlaceFil][matCurrPlaceCol]));
     if(!terminales.includes(tokens[matCurrPlaceFil][matCurrPlaceCol])){
         console.log(tokens[matCurrPlaceFil][matCurrPlaceCol]);
         if (!newFunctions.includes(tokens[matCurrPlaceFil][matCurrPlaceCol])) {
         	newFunctions.push(tokens[matCurrPlaceFil][matCurrPlaceCol]);
+        	newValues.push(pos++);
         }
         matCurrPlaceCol++;
 
@@ -543,11 +542,15 @@ function funWhile(){
 
 function iterate(){
     if(exigir("iterate")){
+    	codIntermedio[pos++] = ITERATE;
+    	stack.push(pos++);
         if(exigir("(")){
             number();
             if(exigir(")")){
                 if(exigir("{")){
                     body();
+                    codIntermedio[pos++] = JMP;
+                    codIntermedio[pos++] = stack.pop();
                     if(exigir("}")){
 
                     }else
