@@ -42,3 +42,219 @@ class program {
        recorrer
      }
 }
+
+
+class program {
+
+program ( ) {
+ flip
+}
+}
+
+class program {
+
+program ( ) {
+          getCard ( 0 )
+ if ( isRed ) {
+            flip
+          }
+}
+}
+
+class program {
+
+program ( ) {
+ while ( isNotEmpty ( 0 ) ) {
+            flip
+            getCard ( 0 )
+          }
+}
+}
+
+class program {
+     void voltear ( ) {
+       flip
+     }
+
+     void recorrer ( ) {
+ while ( isNotEmpty ( 0 ) ) {
+            getCard ( 0 )
+            voltear
+            putCard ( 1 )
+          }
+     }
+
+     program ( ) {
+       recorrer
+     }
+}
+
+class program
+{
+	program ( ) {
+		while( isNotEmpty ( 0 ) ) {
+			if ( isHeart ) {
+				putCard ( 1 )
+			}
+			else
+			{
+				if ( isClubs ) {
+					putCard ( 2 )
+				}
+				else
+				{
+					if ( isDiamond ) {
+						putCard ( 3 )
+					}
+					else
+					{
+						if ( isSpades ) {
+							putCard ( 4 )
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+class program
+{
+	void Fa ( ) {
+		while ( isNotEmpty ( 0 ) ) {
+			if ( isHeart ) {
+				putCard ( 1 )
+			}
+			else
+			{
+				if( isClubs ) {
+					putCard ( 2 )
+				}
+				else
+				{
+					if ( isDiamond ) {
+						putCard ( 3 )
+					}
+					else
+					{
+						if ( isSpades ) {
+							putCard ( 4 )
+						}
+					}
+				}
+			}
+		}
+	}
+	program ( ) {
+		Fa
+	}
+}
+
+class program
+{
+	void Fa ( ) {
+		if ( isHeart ) {
+			putCard ( 1 )
+		}
+		else
+		{
+			if ( isClubs ) {
+				putCard ( 2 )
+			}
+			else
+			{
+				if ( isDiamond ) {
+					putCard ( 3 )
+				}
+				else
+				{
+					if( isSpades ) {
+						putCard ( 4 )
+					}
+				}
+			}
+		}
+	}
+	program(){
+		while ( isNotEmpty ( 0 ) ) {
+			Fa
+		}
+	}
+}
+
+class program
+{
+	program ( ) {
+		while ( isNotEmpty ( 0 ) )
+		{
+			getCard ( 0 )
+			if( isBlack ) {
+				putCard ( 1 )
+			}
+			else
+			{
+				putCard ( 2 )
+			}
+		}
+	}
+}
+
+class program
+{
+	void Fb ( )
+	{
+		getCard ( 0 )
+		if( isBlack )
+		{
+			putCard ( 1 )
+		}
+		else
+		{
+			putCard ( 2 )
+		}
+
+	}
+	program ( ) {
+		while ( isNotEmpty ( 0 ) )
+		{
+			Fb
+		}
+	}
+}
+
+class program
+{
+	void tomarCarta ( )
+	{
+		getCard ( 0 )
+	}
+	void DejarCarta ( )
+	{
+		putCard ( 1 )
+	}
+	void moverAuno ( )
+	{
+		while ( isNotEmpty ( 0 ) )
+		{
+			tomarCarta
+			DejarCarta
+		}
+	}
+	void Dejar ( )
+	{
+		putCard ( 2 )
+	}
+	void moverAdos ( )
+	{
+		while ( isNotEmpty ( 1 ) )
+		{
+			tomarCarta
+			Dejar
+		}
+	}
+
+	program ( ) {
+		moverAuno
+		moverAdos
+	}
+}

@@ -315,7 +315,7 @@ function funFunction() {
 */
 function body(){
 	console.log("Si entro a body");
-    if( verificar("flip") || verificar("getCard") || verificar("putCard") || verificar("if") || verificar("while") || verificar("iterate") || verificarcostumber()){
+    if( verificar("flip") || verificar("getCard") || verificar("putCard") || verificar("if") || verificar("while") || verificar("iterate") || verificarcostumer()){
     	console.log("Entra al if de body");
     	expression();
     	bodyAlpha();
@@ -325,7 +325,7 @@ function body(){
 //<body alpha> ::= //<expression> //<body alpha> | LAMBDA
 function bodyAlpha(){
 	console.log("Si entro a body alpha");
-    if( verificar("flip") || verificar("getCard") || verificar("putCard") || verificar("if") || verificar("while") || verificar("iterate") || verificarcostumber()){
+    if( verificar("flip") || verificar("getCard") || verificar("putCard") || verificar("if") || verificar("while") || verificar("iterate") || verificarcostumer()){
         console.log("Entra al if de body alpha");
         expression();
         bodyAlpha();
@@ -349,8 +349,8 @@ function expression(){
 
 
 //<call function> ::= //<name of function>
-
 function callFunction(){
+
     nameOfFunction();
 }
 
@@ -364,7 +364,8 @@ function nameOfFunction(){
     else if (verificar('{') || verificar('}') || verificar('(') || verificar(')')){
     	errorCreater("Error, missing statement calling function, was expected the name of function", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
     }
-    else if (verificarcostumer()){
+    else {
+        console.log(newFunctions);
         customer();
     }
 }
@@ -405,6 +406,7 @@ function official(){
 
 
 function verificarcostumer(){
+  console.log(tokens[matCurrPlaceFil][matCurrPlaceCol]);
 	return newFunctions.includes(tokens[matCurrPlaceFil][matCurrPlaceCol]);
 }
 
@@ -425,6 +427,17 @@ function customer(){
         if (!newFunctions.includes(tokens[matCurrPlaceFil][matCurrPlaceCol])) {
         	newFunctions.push(tokens[matCurrPlaceFil][matCurrPlaceCol]);
         	newValues.push(pos++);
+        } else {
+          let numbOfFunc = 0;
+
+          codIntermedio[pos++] = CALL;
+
+          for (var i = 0; i < newFunctions.length; i++) {
+              if(newFunctions[i] == tokens[matCurrPlaceFil][matCurrPlaceCol]){
+                numbOfFunc = i;
+              }
+          }
+          codIntermedio[pos++] = newValues[numbOfFunc];
         }
         matCurrPlaceCol++;
 
@@ -444,6 +457,7 @@ function numberOfDeck(){
     }
     if(!isNaN(tokens[matCurrPlaceFil][matCurrPlaceCol])){
         if(tokens[matCurrPlaceFil][matCurrPlaceCol] >= 0 && tokens[matCurrPlaceFil][matCurrPlaceCol] < 53){
+            codIntermedio[pos++] = tokens[matCurrPlaceFil][matCurrPlaceCol];
             console.log(tokens[matCurrPlaceFil][matCurrPlaceCol]);
         }
         else
