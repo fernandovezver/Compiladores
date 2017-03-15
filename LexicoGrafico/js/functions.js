@@ -221,11 +221,10 @@ function program() {
             else
                 errorCreater("Error, unexpected token found, was expected: {", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
         }
-        else{
-            console.log("Hola");
+        else
 	        errorCreater("Error, unexpected token found, was expected: program", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
-        }
-    }
+    }else
+	    errorCreater("Error, unexpected token found, was expected: program", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
 }
 
 
@@ -314,7 +313,6 @@ function funFunction() {
 */
 function body(){
 	console.log("Si entro a body");
-	console.log(tokens[matCurrPlaceFil][matCurrPlaceCol]);
     if( verificar("flip") || verificar("getCard") || verificar("putCard") || verificar("if") || verificar("while") || verificar("iterate") || verificarcostumber()){
     	console.log("Entra al if de body");
     	expression();
@@ -469,7 +467,7 @@ function funIf(){
             if (exigir(")")){
                 if (exigir("{")) {
                     //Esta linea que paso?
-                	codIntermedio[i++] = 20;
+                	codIntermedio[i++] = JMP;
                 	stack.push(i++);
                     body();
                     if (exigir("}")) {
@@ -514,11 +512,11 @@ function funElseif(){
 function funWhile(){
 	console.log("Si entro al while");
     if(exigir("while")){
-    	stack.push(i);
     	codIntermedio[i++] = WHILE;
+	    stack.push(i);
         if(exigir("(")){
+	        codIntermedio[i++] = CONDICIONAL;
             conditional();
-            codIntermedio[i++] = CONDICIONAL;
             if(exigir(")")){
                 if(exigir("{")){
                 	codIntermedio[i++] = JMP;
