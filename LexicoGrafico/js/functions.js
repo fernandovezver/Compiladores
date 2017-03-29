@@ -155,9 +155,41 @@ Hasta ahora lo que hace exigir es:
 1.-Retorna una bandera que dice true o false y asi sabemos el error(Yo creo en el futuro sera mejor un entero si queremos mostras la cantidad de
 errores y seguir checando el codigo)
 2.-Compara el token con la posicion en la que deberia de ir
-
-
 */
+function sem_IF(){}
+function sem_WHILE(){}
+function sem_ITERATE(){}
+function sem_RETURN(){}
+function sem_INICIO_PROG(){}
+function sem_FIN(){}
+function sem_JMP(){}
+function sem_CALL(){}
+function sem_FLIP(){}
+function sem_GETCARD(){}
+function sem_PUTCARD(){}
+function sem_CONSVALUE(){}
+function sem_CONDICIONAL(){}
+function sem_ConstIsRed(){}
+function sem_ConstIsBlack(){}
+function sem_ConstIsHeart(){}
+function sem_ConstIsClubs(){}
+function sem_ConstIsDiamond(){}
+function sem_ConstIsSpades(){}
+function sem_ConstIsNotRed(){}
+function sem_ConstIsNotBlack(){}
+function sem_ConstIsNotHeart(){}
+function sem_ConstIsNotClubs(){}
+function sem_ConstIsNotDiamond(){}
+function sem_ConstIsNotSpades(){}
+function sem_ConstIsEmpty(){}
+function sem_ConstIsNotEmpty(){}
+function sem_ConstMenorque(){}
+function sem_ConstMayorque(){}
+function sem_ConstMenorigual(){}
+function sem_ConstMayorigual(){}
+function sem_ConstIgualigual(){}
+function sem_ConstDiferente(){}
+
 function semantico(){
 	let i = 0;
 	while(codIntermedio[i] != FIN){
