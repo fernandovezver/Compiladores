@@ -1,20 +1,20 @@
 const terminales = ['class', 'program', '{', '}', '(', ')', 'if', 'else', 'while', 'iterate', 'void', 'isRed', 'isBlack', 'isHeart', 'isClubs', 'isDiamond', 'isSpades', 'isNotRed', 'isNotBlack', 'isNotHeart', 'isNotClubs', 'isNotDiamond', 'isNotSpades', 'isEmpty', 'isNotEmpty', '<', '>', '<=', '>=', '==', '!=', 'flip', 'getCard', 'putCard', 'VALUE'];
 
 
-const IF = 10;
-const WHILE = 20;
-const ITERATE = 30;
-const RETURN = 40;
-const INICIO_PROG = 50;
-const FIN = 60;
-const JMP = 70;
-const CALL = 80;
-const FLIP = 90;
-const GETCARD = 100;
-const PUTCARD = 110;
-const CONSVALUE = 120;
+const IF = 500;
+const WHILE = 501;
+const ITERATE = 502;
+const RETURN = 503;
+const INICIO_PROG = 504;
+const FIN = 505;
+const JMP = 506;
+const CALL = 507;
+const FLIP = 508;
+const GETCARD = 509;
+const PUTCARD = 510;
+const CONSVALUE = 511;
 
-const CONDICIONAL = 255;
+const CONDICIONAL = 555;
 
 const ConstIsRed = 512;
 const ConstIsBlack = 513;
@@ -108,6 +108,7 @@ function lexico(){
     }
 }
 
+
 function showerrors(){
   $('#errorarea').append("ERRORS FOUND "+errorNum+"&#10;");
   for (let i = 0; i < errorNum; i++) {
@@ -157,6 +158,85 @@ errores y seguir checando el codigo)
 
 
 */
+function semantico(){
+	let i = 0;
+	while(codIntermedio[i] != FIN){
+		switch(codIntermedio[i]){
+			case 500: 
+					break;
+			case 501: 
+					break;
+			case 502: 
+					break;
+			case 503: 
+					break;
+			case 504: 
+					break;
+			case 505: 
+					break;
+			case 506: 
+					break;
+			case 507: 
+					break;
+			case 508: 
+					break;
+			case 509: 
+					break;
+			case 510: 
+					break;
+			case 511: 
+					break;
+			case 555: 
+					break;
+			case 512: 
+					break;
+			case 513: 
+					break;
+			case 514: 
+					break;
+			case 515: 
+					break;
+			case 516: 
+					break;
+			case 517: 
+					break;
+			case 518: 
+					break;
+			case 519: 
+					break;
+			case 520: 
+					break;
+			case 521: 
+					break;
+			case 522: 
+					break;
+			case 523: 
+					break;
+			case 524: 
+					break;
+			case 525: 
+					break;
+			//<
+			case 526: 
+					break;
+			//>
+			case 527: 
+					break;
+			//<=
+			case 528: 
+					break;
+			//>=
+			case 529: 
+					break;
+			//==
+			case 530: 
+					break;
+			//!=
+			case 531: 
+					break;
+		}
+	}
+}
 function exigir(token) {
     let flag = false;
     //Si la longitud de la fila es mayor a la columna en la que estamos entra
@@ -212,9 +292,11 @@ function program() {
     if (exigir("class")) {
         if (exigir("program")) {
             if (exigir("{")) {
+				codIntermedio[pos++] = INICIO_PROG;
                 functions();
                 main_function();
                 if (exigir("}")) {
+                	codIntermedio[pos++] = FIN;
 	                console.log("Mensaje");
                 }
                 else
