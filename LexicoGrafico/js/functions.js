@@ -4,7 +4,6 @@ const terminales = ['class', 'program', '{', '}', '(', ')', 'if', 'else', 'while
 const IF = 500;
 const WHILE = 501;
 const ITERATE = 502;
-const RETURN = 503;
 const INICIO_PROG = 504;
 const FIN = 505;
 const JMP = 506;
@@ -13,8 +12,6 @@ const FLIP = 508;
 const GETCARD = 509;
 const PUTCARD = 510;
 const CONSVALUE = 511;
-
-const CONDICIONAL = 555;
 
 const ConstIsRed = 512;
 const ConstIsBlack = 513;
@@ -168,7 +165,6 @@ function sem_FLIP(){}
 function sem_GETCARD(){}
 function sem_PUTCARD(){}
 function sem_CONSVALUE(){}
-function sem_CONDICIONAL(){}
 function sem_ConstIsRed(){}
 function sem_ConstIsBlack(){}
 function sem_ConstIsHeart(){}
@@ -194,13 +190,11 @@ function semantico(){
 	let i = 0;
 	while(codIntermedio[i] != FIN){
 		switch(codIntermedio[i]){
-			case 500: 
+			case 500:
 					break;
 			case 501: 
 					break;
 			case 502: 
-					break;
-			case 503: 
 					break;
 			case 504: 
 					break;
@@ -217,8 +211,6 @@ function semantico(){
 			case 510: 
 					break;
 			case 511: 
-					break;
-			case 555: 
 					break;
 			case 512: 
 					break;
@@ -589,7 +581,6 @@ function funIf(){
     if (exigir("if")){
     	codIntermedio[pos++] = IF;
         if (exigir("(")){
-        	codIntermedio[pos++] = CONDICIONAL;
             conditional();
             if (exigir(")")){
                 if (exigir("{")) {
@@ -642,7 +633,6 @@ function funWhile(){
     	codIntermedio[pos++] = WHILE;
 	    stack.push(pos);
         if(exigir("(")){
-	        codIntermedio[pos++] = CONDICIONAL;
             conditional();
             if(exigir(")")){
                 if(exigir("{")){
@@ -802,7 +792,7 @@ function number(){
 
 function operador(){
     if(verificar("<")){
-    	codIntermedio[pos++] = ConstMenorqueque;
+    	codIntermedio[pos++] = ConstMenorque;
 	    exigir("<");
     }
     else if(verificar(">")){
