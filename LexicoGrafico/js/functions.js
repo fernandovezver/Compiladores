@@ -1,4 +1,5 @@
 const terminales = ['class', 'program', '{', '}', '(', ')', 'if', 'else', 'while', 'iterate', 'void', 'isRed', 'isBlack', 'isHeart', 'isClubs', 'isDiamond', 'isSpades', 'isNotRed', 'isNotBlack', 'isNotHeart', 'isNotClubs', 'isNotDiamond', 'isNotSpades', 'isEmpty', 'isNotEmpty', '<', '>', '<=', '>=', '==', '!=', 'flip', 'getCard', 'putCard', 'VALUE'];
+const numbers = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
 
 
 const IF = 500;
@@ -51,6 +52,16 @@ let newValues;
 let codIntermedio;
 let stack = [];
 let pos;
+let decks = [];
+
+let currentCard = {
+	number: "10",
+	color: "Black",
+	type: "Spades",
+	src: "/",
+	decknum: 0
+};
+
 
 function errorCreater(text, word, line, pos){
     errors[errorNum++] =  {
@@ -153,8 +164,43 @@ Hasta ahora lo que hace exigir es:
 errores y seguir checando el codigo)
 2.-Compara el token con la posicion en la que deberia de ir
 */
-function sem_IF(){}
-function sem_WHILE(){}
+function sem_IF(i){
+	switch(codIntermedio[i+1]){
+		case 512:
+			break;
+		case 513:
+			break;
+		case 514:
+			break;
+		case 515:
+			break;
+		case 516:
+			break;
+		case 517:
+			break;
+		case 518:
+			break;
+		case 519:
+			break;
+		case 520:
+			break;
+		case 521:
+			break;
+		case 522:
+			break;
+		case 523:
+			break;
+		case 524:
+			break;
+		case 525:
+			break;
+	}
+}
+
+function sem_WHILE(){
+
+}
+
 function sem_ITERATE(){}
 function sem_RETURN(){}
 function sem_INICIO_PROG(){}
@@ -164,7 +210,28 @@ function sem_CALL(){}
 function sem_FLIP(){}
 function sem_GETCARD(){}
 function sem_PUTCARD(){}
-function sem_CONSVALUE(){}
+function sem_CONSVALUE(){
+	switch (codIntermedio[i+1]){
+		//<
+		case 526:
+			break;
+		//>
+		case 527:
+			break;
+		//<=
+		case 528:
+			break;
+		//>=
+		case 529:
+			break;
+		//==
+		case 530:
+			break;
+		//!=
+		case 531:
+			break;
+	}
+}
 function sem_ConstIsRed(){}
 function sem_ConstIsBlack(){}
 function sem_ConstIsHeart(){}
@@ -189,16 +256,16 @@ function sem_ConstDiferente(){}
 function semantico(){
 	let i = 0;
 	while(codIntermedio[i] != FIN){
-		switch(codIntermedio[i]){
+		switch(codIntermedio[i++]){
 			case 500:
+				sem_IF(i);
 					break;
-			case 501: 
+			case 501:
+				sem_WHILE();
 					break;
 			case 502: 
 					break;
 			case 504: 
-					break;
-			case 505: 
 					break;
 			case 506: 
 					break;
@@ -210,53 +277,8 @@ function semantico(){
 					break;
 			case 510: 
 					break;
-			case 511: 
-					break;
-			case 512: 
-					break;
-			case 513: 
-					break;
-			case 514: 
-					break;
-			case 515: 
-					break;
-			case 516: 
-					break;
-			case 517: 
-					break;
-			case 518: 
-					break;
-			case 519: 
-					break;
-			case 520: 
-					break;
-			case 521: 
-					break;
-			case 522: 
-					break;
-			case 523: 
-					break;
-			case 524: 
-					break;
-			case 525: 
-					break;
-			//<
-			case 526: 
-					break;
-			//>
-			case 527: 
-					break;
-			//<=
-			case 528: 
-					break;
-			//>=
-			case 529: 
-					break;
-			//==
-			case 530: 
-					break;
-			//!=
-			case 531: 
+			case 511:
+				sem_CONSVALUE();
 					break;
 		}
 	}
