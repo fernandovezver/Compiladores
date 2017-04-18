@@ -258,3 +258,37 @@ class program
 		moverAdos
 	}
 }
+
+
+TEST DE FOTO
+class program {
+    void mover ( ) {
+        while ( isNotEmpty ( 0 ) ) {
+              getCard ( 0 )
+              putCard ( 1 )
+        }
+     }
+    void regresar ( ) {
+         while ( isNotEmpty ( 0 ) ) {
+               getCard ( 1 )
+               putCard ( 2 )
+         }
+     }
+     void voltear ( ) {
+         while ( isNotEmpty ( 2 ) ) {
+               getCard ( 2 )
+               flip
+               putCard ( 3 )
+         }
+      }
+      program ( ) {
+          mover ( )
+          regresar ( )
+          voltear ( )
+          if ( isNotEmpty ( 3 ) ) {
+               getCard ( 3 )
+               flip
+               putCard ( 0 )
+           }
+       }
+}
