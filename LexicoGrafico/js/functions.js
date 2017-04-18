@@ -2,45 +2,45 @@ const terminales = ['class', 'program', '{', '}', '(', ')', 'if', 'else', 'while
 const numbers = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
 
 
-const IF = 500;
-const WHILE = 501;
-const ITERATE = 502;
-const INICIO_PROG = 504;
-const FIN = 505;
-const JMP = 506;
-const CALL = 507;
-const FLIP = 508;
-const GETCARD = 509;
-const PUTCARD = 510;
-const CONSVALUE = 511;
+const IF = -1;
+const WHILE = -2;
+const ITERATE = -3;
+const RETURN = -4;
+const INICIO_PROG = -5;
+const FIN = -6;
+const JMP = -7;
+const CALL = -8;
+const FLIP = -9;
+const GETCARD = -10;
+const PUTCARD = -11;
 
-const ConstIsRed = 512;
-const ConstIsBlack = 513;
-const ConstIsHeart = 514;
-const ConstIsClubs = 515;
-const ConstIsDiamond = 516;
-const ConstIsSpades = 517;
-const ConstIsNotRed = 518;
-const ConstIsNotBlack = 519;
-const ConstIsNotHeart = 520;
-const ConstIsNotClubs = 521;
-const ConstIsNotDiamond = 522;
-const ConstIsNotSpades = 523;
-const ConstIsEmpty = 524;
-const ConstIsNotEmpty = 525;
+const ConstIsRed = -12;
+const ConstIsBlack = -13;
+const ConstIsHeart = -14;
+const ConstIsClubs = -15;
+const ConstIsDiamond = -16;
+const ConstIsSpades = -17;
+const ConstIsNotRed = -18;
+const ConstIsNotBlack = -19;
+const ConstIsNotHeart = -20;
+const ConstIsNotClubs = -21;
+const ConstIsNotDiamond = -22;
+const ConstIsNotSpades = -23;
+const ConstIsEmpty = -24;
+const ConstIsNotEmpty = -25;
 //<
-const ConstMenorque = 526;
+const ConstMenorque = -26;
 //>
-const ConstMayorque = 527;
+const ConstMayorque = -27;
 //<=
-const ConstMenorigual = 528;
+const ConstMenorigual = -28;
 //>=
-const ConstMayorigual = 529;
+const ConstMayorigual = -29;
 //==
-const ConstIgualigual = 530;
+const ConstIgualigual = -30;
 //!=
-const ConstDiferente = 531;
-
+const ConstDiferente = -31;
+const CONSVALUE = -32;
 
 let tokens;
 let errors;
@@ -156,6 +156,7 @@ function mainFunction (){
     errorNum = 0;
     errors = [];
     console.log(codIntermedio);
+		//printIntermediateCode();
 
 }
 /*
@@ -166,33 +167,33 @@ errores y seguir checando el codigo)
 */
 function sem_IF(i){
 	switch(codIntermedio[i+1]){
-		case 512:
+		case -12:
 			break;
-		case 513:
+		case -13:
 			break;
-		case 514:
+		case -14:
 			break;
-		case 515:
+		case -15:
 			break;
-		case 516:
+		case -16:
 			break;
-		case 517:
+		case -17:
 			break;
-		case 518:
+		case -18:
 			break;
-		case 519:
+		case -19:
 			break;
-		case 520:
+		case -20:
 			break;
-		case 521:
+		case -21:
 			break;
-		case 522:
+		case -22:
 			break;
-		case 523:
+		case -23:
 			break;
-		case 524:
+		case -24:
 			break;
-		case 525:
+		case -25:
 			break;
 	}
 }
@@ -213,22 +214,22 @@ function sem_PUTCARD(){}
 function sem_CONSVALUE(){
 	switch (codIntermedio[i+1]){
 		//<
-		case 526:
+		case -26:
 			break;
 		//>
-		case 527:
+		case -27:
 			break;
 		//<=
-		case 528:
+		case -28:
 			break;
 		//>=
-		case 529:
+		case -29:
 			break;
 		//==
-		case 530:
+		case -30:
 			break;
 		//!=
-		case 531:
+		case -31:
 			break;
 	}
 }
@@ -257,27 +258,27 @@ function semantico(){
 	let i = 0;
 	while(codIntermedio[i] != FIN){
 		switch(codIntermedio[i++]){
-			case 500:
+			case -1:
 				sem_IF(i);
 					break;
-			case 501:
+			case -2:
 				sem_WHILE();
 					break;
-			case 502: 
+			case -3:
 					break;
-			case 504: 
+			case -5:
 					break;
-			case 506: 
+			case -7:
 					break;
-			case 507: 
+			case -8:
 					break;
-			case 508: 
+			case -9:
 					break;
-			case 509: 
+			case -10:
 					break;
-			case 510: 
+			case -11:
 					break;
-			case 511:
+			case -32:
 				sem_CONSVALUE();
 					break;
 		}
@@ -411,6 +412,7 @@ function funFunction() {
 	            if ( exigir ( "{"  ) ) {
 	                body();
                     if ( exigir( "}" ) ) {
+											//codIntermedio[i+1] = 499;
 		            }else
                         errorCreater("Error, unexpected token found, was expected: }", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
 	            } else
@@ -870,3 +872,120 @@ function deckSimpleCondition(){
     else
         errorCreater("Expected a value conditional, found something else", tokens[matCurrPlaceFil][matCurrPlaceCol], matCurrPlaceFil, matCurrPlaceCol);
 }
+
+//Aportación de yañez
+/*
+function printIntermediateCode(){
+	let line=0;
+	codIntermedio.forEach(cell=>{
+        switch(cell){
+            case IF:
+                console.log(line+" : "+"IF");
+                break;
+            case WHILE:
+                console.log(line+" : "+"WHILE");
+                break;
+            case ITERATE:
+                console.log(line+" : "+"ITERATE");
+                break;
+            case RETURN:
+                console.log(line+" : "+"RETURN");
+                break;
+            case INICIOPROG:
+                console.log(line+" : "+"INICIOPROG");
+                break;
+            case FIN:
+                console.log(line+" : "+"FIN");
+                break;
+            case JMP:
+                console.log(line+" : "+"JMP");
+                break;
+            case CALL:
+                console.log(line+" : "+"CALL");
+                break;
+            case FLIP:
+                console.log(line+" : "+"FLIP");
+                break;
+            case GETCARD:
+                console.log(line+" : "+"GETCARD");
+                break;
+            case PUTCARD:
+                console.log(line+" : "+"PUTCARD");
+                break;
+            case ISBLACK:
+                console.log(line+" : "+"ISBLACK");
+                break;
+            case ISRED:
+                console.log(line+" : "+"ISRED");
+                break;
+            case ISHEART:
+                console.log(line+" : "+"ISHEART");
+                break;
+            case ISCLUBS:
+                console.log(line+" : "+"ISCLUBS");
+                break;
+            case ISDIAMOND:
+                console.log(line+" : "+"ISDIAMOND");
+                break;
+            case ISSPADES:
+                console.log(line+" : "+"ISSPADES");
+                break;
+            case ISNOTBLACK:
+                console.log(line+" : "+"ISNOTBLACK");
+                break;
+            case ISNOTRED:
+                console.log(line+" : "+"ISNOTRED");
+                break;
+            case ISNOTHEART:
+                console.log(line+" : "+"ISNOTHEART");
+                break;
+            case ISNOTCLUBS:
+                console.log(line+" : "+"ISNOTCLUBS");
+                break;
+            case ISNOTDIAMOND:
+                console.log(line+" : "+"ISNOTDIAMOND");
+                break;
+            case ISNOTSPADES:
+                console.log(line+" : "+"ISNOTSPADES");
+                break;
+            case LESSTHAN:
+                console.log(line+" : "+"LESSTHAN");
+                break;
+            case GREATERTHAN:
+                console.log(line+" : "+"GREATERTHAN");
+                break;
+            case LESSOREQUAL:
+                console.log(line+" : "+"LESSOREQUAL");
+                break;
+            case GREATEROREQUAL:
+                console.log(line+" : "+"GREATEROREQUAL");
+                break;
+            case EQUAL:
+                console.log(line+" : "+"EQUAL");
+                break;
+            case DIFFERENT:
+                console.log(line+" : "+"DIFFERENT");
+                break;
+            case ISEMPTY:
+                console.log(line+" : "+"ISEMPTY");
+                break;
+            case ISNOTEMPTY:
+                console.log(line+" : "+"ISNOTEMPTY");
+                break;
+            case VALUE:
+                console.log(line+" : "+"VALUE");
+                break;
+            default:
+                if(cell<=-33){
+                    console.log(line+" : "+funcTable.filter(f=>f.functionNumber===cell)[0].name);
+                }
+                else{
+                    console.log(line+" : "+cell);
+                }
+                break;
+        }
+        line++;
+
+	});
+}
+*/
